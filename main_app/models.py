@@ -47,7 +47,8 @@ class Task(models.Model):
 
 class Employee(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    dep = models.ForeignKey(Department, on_delete=models.CASCADE)
+    dep = models.ForeignKey(Department)
+    org = models.ForeignKey(Organization, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
