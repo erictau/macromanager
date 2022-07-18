@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+{% csrf_token %}
+{% for dept in department_list %}
+
+    <a href="{% url 'department_index' org.id %}">
+        <div class="card">
+            <div class="card-body">
+              Organization: {{ org.name }}
+            </div>
+        </div>
+    </a>
+
+{% endfor %}
+
+<h2>Create an Org</h2>
+
+<div class="row g-3">
+    <div class="col">
+      <input type="text" class="form-control" placeholder="Your Organiztion's Name" aria-label="name">
+    </div>
+    
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">Sign in</button>
+    </div>
+</form>
+
+{% endblock %}
