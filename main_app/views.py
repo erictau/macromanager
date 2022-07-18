@@ -1,13 +1,13 @@
 from django.shortcuts import render
 from django.shortcuts import render, redirect
-from .forms import OrgForm, UserForm, DeptForm
+from .forms import OrgForm, UserForm, DeptForm, TaskForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 
-from .models import Department, Organization
+from .models import Department, Organization, Task, Employee
 
 
 # Create your views here.
@@ -55,6 +55,8 @@ def organizations_create(request):
     if form.is_valid():
         # This is where we would associate an org to an employee id.
         form.save()
+    org = Organization.objects.get(name=request.POST['name'])
+    Employee.objects.create(user_id=request.user.id, org_id=org.id)
     return redirect('departments_new')
 
 
@@ -83,6 +85,6 @@ def departments_create(request):
         form.save()
     return redirect('')
     
-
-def task_update(request):
-    pass
+class TaskDetail(LoginRequiredMixin, DetailView):
+    model = Task
+    
