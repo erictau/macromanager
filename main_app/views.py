@@ -55,16 +55,24 @@ def organizations_create(request):
     if form.is_valid():
         # This is where we would associate an org to an employee id.
         form.save()
-    return redirect('departments_new')
+    return redirect('department_new')
 
 
 ### Departments
 
+@login_required
 def departments_new(request):
     dept = Department.objects.all()
     department_form = DepartmentForm()
     context = { 'dept': dept, 'department_form': department_form}
     return render(request, 'departments/department_form.html', context)
+
+@login_required
+def departments_create(request):
+    form = DeptForm(rquest.POST)
+    if form.is_valid():
+        form.save()
+    return redirect('')
 
 def task_create(request):
     pass
