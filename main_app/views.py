@@ -60,16 +60,12 @@ def organizations_create(request):
 
 ### Departments
 
-class DepartmentList(LoginRequiredMixin, ListView):
-    model = Department
 
-class DepartmentDetail(LoginRequiredMixin, DetailView):
-    model = Department
-    
-def deparments_new(request):
-    departments = Department.objects.all()
+def departments_new(request):
+    dept = Department.objects.all()
     department_form = DepartmentForm()
-    context = { 'departments': departments, 'department_form': department_form}
+    context = { 'dept': dept, 'department_form': department_form}
+    return render(request, 'departments/departments_form.html', context)
 
 def task_create(request):
     pass
