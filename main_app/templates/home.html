@@ -3,4 +3,34 @@
 
 <h1>Home</h1>
 
+{% if user.is_authenticated %}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div>
+                left col
+            </div>
+        </div>
+        <div class="col-6">
+            <div>
+                center col
+            </div>
+        </div>
+        <div class="col">
+            <div>
+                right col
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% else %}
+
+<div>
+    <a href="{% url 'signup' %}"><button>signup</button></a>
+</div>
+{% endif %}   
+
 {% endblock %}
