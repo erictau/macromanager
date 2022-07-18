@@ -3,6 +3,8 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
+from main_app.models import Organization
+
 class UserForm(UserCreationForm):
     first_name = forms.CharField()
     last_name = forms.CharField()
@@ -13,4 +15,5 @@ class UserForm(UserCreationForm):
 
 class OrgForm(ModelForm):
     class Meta:
+        model = Organization
         fields = ['name']

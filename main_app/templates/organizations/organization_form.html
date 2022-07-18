@@ -3,7 +3,6 @@
 {% block content %}
 
 
-{% csrf_token %}
 {% for org in orgs %}
 
     <a href="{% url 'department_index' org.id %}">
@@ -18,7 +17,10 @@
 
 <h2>Create an Org</h2>
 
+<form method='POST' action='{% url "organizations_create" %}'>
+{{ org_form.as_p }}
 {% csrf_token %}
-{{ form.as_p }}
+<input type="submit" value="Create Orgaization" class="btn">
+</form>
 
 {% endblock %}
