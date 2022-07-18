@@ -60,7 +60,6 @@ def organizations_create(request):
 
 ### Departments
 
-
 def departments_new(request):
     dept = Department.objects.all()
     department_form = DepartmentForm()
