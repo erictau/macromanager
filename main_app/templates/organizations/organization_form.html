@@ -5,7 +5,7 @@
 
 {% for org in orgs %}
 
-    <a href="{% url 'department_index' org.id %}">
+    <a href="{% url 'about' %}">
         <div class="card">
             <div class="card-body">
               Organization: {{ org.name }}
@@ -20,7 +20,7 @@
 <form method='POST' action='{% url "organizations_create" %}'>
 {{ org_form.as_p }}
 {% csrf_token %}
-<input type="submit" value="Create Orgaization" class="btn">
+<input type="submit" value="Create Organization" class="btn btn-primary">
 </form>
 
 {% endblock %}
