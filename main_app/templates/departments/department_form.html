@@ -18,11 +18,11 @@
 
 <h2>Create a Dept</h2>
 
-<form action="departments_create">
+<form method="POST" action="{% url 'departments_create' %}">
 
   {{ department_form.as_p }}
   {% csrf_token %}
-
+  <input type="submit" value="Create Department" class="btn btn-primary">
 </form>
 
 {% endblock %}
