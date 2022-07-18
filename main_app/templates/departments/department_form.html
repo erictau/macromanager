@@ -20,7 +20,7 @@
 
 <form method="POST" action="{% url 'departments_create' %}">
 
-  {{ department_form.as_p }}
+  {{ dept_form.as_p }}
   {% csrf_token %}
   <input type="submit" value="Create Department" class="btn btn-primary">
 </form>
