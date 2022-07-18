@@ -3,7 +3,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
-from main_app.models import Organization, Department
+from main_app.models import Organization, Department, Task
 
 class UserForm(UserCreationForm):
     first_name = forms.CharField()
@@ -18,7 +18,12 @@ class OrgForm(ModelForm):
         model = Organization
         fields = ['name']
 
-class DepartmentForm(ModelForm):
+class DeptForm(ModelForm):
     class Meta:
         model = Department
         fields = ['name']
+
+class TaskForm(ModelForm):
+    class Meta:
+        model = Task
+        fields = '__all__'

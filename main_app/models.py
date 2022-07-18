@@ -15,6 +15,11 @@ TASKSTATUS = (
     ('UAS', 'Unassigned'), 
     ('COM', 'Complete'), 
 )
+EMPROLES = (
+    ('OWN', 'Owner'), 
+    ('MGR', 'Manager'), 
+    ('MBR', 'Staff Member')
+)
 
 # Create your models here,
 class Organization(models.Model):
@@ -46,10 +51,15 @@ class Task(models.Model):
         return self.name
 
 class Employee(models.Model):
+    # role = models.CharField(
+    #     max_lenght=3, 
+    #     choices=EMPROLES,
+    #     default=EMPROLES[0][0])
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    dep = models.ForeignKey(Department, on_delete=models.CASCADE)
+    dept = models.ManyToManyField(Department)
     org = models.ForeignKey(Organization, on_delete=models.CASCADE)
+    task = models.ManyToManyField(Task)
 
     def __str__(self):
-        return self.name
+        return self.user_id.first_name
 
