@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import render, redirect
-from .forms import OrgForm, UserForm, DepartmentForm
+from .forms import OrgForm, UserForm, DeptForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -55,7 +55,7 @@ def organizations_create(request):
     if form.is_valid():
         # This is where we would associate an org to an employee id.
         form.save()
-    return redirect('department_new')
+    return redirect('departments_new')
 
 
 ### Departments
@@ -63,16 +63,16 @@ def organizations_create(request):
 @login_required
 def departments_new(request):
     dept = Department.objects.all()
-    department_form = DepartmentForm()
-    context = { 'dept': dept, 'department_form': department_form}
+    dept_form = DeptForm()
+    context = { 'dept': dept, 'dept_form': dept_form}
     return render(request, 'departments/department_form.html', context)
 
 @login_required
 def departments_create(request):
-    form = DeptForm(rquest.POST)
+    form = DeptForm(request.POST)
     if form.is_valid():
         form.save()
-    return redirect('')
+    return redirect('department_list')
 
 def task_create(request):
     pass
