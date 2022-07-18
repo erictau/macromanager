@@ -70,6 +70,18 @@ def departments_new(request):
     return render(request, 'departments/department_form.html', context)
 
 @login_required
+def departments_create(request):
+    form = DeptForm(request.POST)
+    if form.is_valid():
+        department = form.save(commit=False)
+        department.org_id = request.user.employee.org.id
+        form.save()
+    return redirect('about')
+
+
+### Tasks
+
+@login_required
 def tasks_create(request, department_id):
     form = TaskForm(request.POST)
     if form.is_valid():
@@ -78,15 +90,7 @@ def tasks_create(request, department_id):
         task.save()
     return redirect('department_detail', department_id = department_id)
 
-@login_required
-def departments_create(request):
-    form = DeptForm(request.POST)
-    if form.is_valid():
-        department = form.save(commit=False)
-        department.org_id = request.user.employee.org.id
-        form.save()
-    return redirect('about')
-    
 class TaskDetail(LoginRequiredMixin, DetailView):
     model = Task
+    template_name = 'tasks/detail.html'
     

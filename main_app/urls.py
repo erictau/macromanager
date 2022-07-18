@@ -9,7 +9,7 @@ urlpatterns = [
     path('organizations/new', views.organizations_new, name='organizations_new'), 
     path('organizations/create', views.organizations_create, name='organizations_create'),
     path('departments/new', views.departments_new, name='departments_new'), 
-    path('departments/<int:department_id>/tasks_create', views.tasks_create, name='tasks_create'),
-    #path('departments/<int:department_id>/tasks/<int:task_id>', views.tasks_detail, name='tasks_detail'),
     path('departments/create', views.departments_create, name='departments_create'), 
+    path('departments/<int:department_id>/tasks_create', views.tasks_create, name='tasks_create'),
+    path('tasks/<int:pk>', views.TaskDetail.as_view(), name='tasks_detail'),
 ]
