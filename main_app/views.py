@@ -60,11 +60,6 @@ def organizations_create(request):
 
 ### Departments
 
-class DepartmentList(LoginRequiredMixin, ListView):
-    model = Department
-
-class DepartmentDetail(LoginRequiredMixin, DetailView):
-    model = Department
     
 def deparments_new(request):
     departments = Department.objects.all()
