@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 
-from .models import Department, Organization, Task
+from .models import Department, Organization, Task, Employee
 
 
 # Create your views here.
@@ -55,6 +55,8 @@ def organizations_create(request):
     if form.is_valid():
         # This is where we would associate an org to an employee id.
         form.save()
+    org = Organization.objects.get(name=request.POST['name'])
+    Employee.objects.create(user_id=request.user.id, org_id=org.id)
     return redirect('departments_new')
 
 
