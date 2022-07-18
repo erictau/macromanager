@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from .forms import OrgForm, UserForm, DeptForm, TaskForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
@@ -94,3 +95,9 @@ class TaskDetail(LoginRequiredMixin, DetailView):
     model = Task
     template_name = 'tasks/detail.html'
     
+class TaskDelete(LoginRequiredMixin, DeleteView):
+    model = Task
+    def get_url_params(self):
+        return self.kwargs
+        
+    success_url = reverse('departments_detail', args=[get_url_params()['department_id']])
