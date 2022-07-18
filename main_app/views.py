@@ -67,3 +67,8 @@ class DepartmentDetail(LoginRequiredMixin, DetailView):
     model = Department
     
 
+def task_create(request):
+    pass
+
+def task_update(request):
+    pass
