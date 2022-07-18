@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+{% csrf_token %}
+{% for org in orgs %}
+
+    <a href="{% url 'department_index' org.id %}">
+        <div class="card">
+            <div class="card-body">
+              Organization: {{ org.name }}
+            </div>
+        </div>
+    </a>
+
+{% endfor %}
+
+<h2>Create an Org</h2>
+
+{% csrf_token %}
+{{ form.as_p }}
+
+{% endblock %}
