@@ -2,6 +2,8 @@
 {% block content %}
 
 <h1>{{department.name}}</h1>
+<p>I hate this dept</p>
+<a href="{% url 'about' %}"><btn>Delete</btn></a>
 
 <!-- Tasks Start -->
 {% for task in department.task_set.all %}
@@ -14,6 +16,7 @@
                 <td> {{ task.due }} </td>
                 <td> {{ task.description }} </td>
                 <td> {{ task.status }} </td>
+                <a href="{% url 'about' %}"><td>Delete</td></a>
             </tr>
         {% if task.urgency == 'MID' %}
             <tr class="table-primary">
@@ -21,6 +24,7 @@
                 <td> {{ task.due }} </td>
                 <td> {{ task.description }} </td>
                 <td> {{ task.status }} </td>
+                <a href="{% url 'about' %}"><td>Delete</td></a>
             </tr>
         {% if task.urgency == 'HIGH' %}
             <tr class="table-warning">
@@ -28,6 +32,7 @@
                 <td> {{ task.due }} </td>
                 <td> {{ task.description }} </td>
                 <td> {{ task.status }} </td>
+                <a href="{% url 'about' %}"><td>Delete</td></a>
             </tr>
         {% if task.urgency == 'EMERG' %}
             <tr class="table-danger">
@@ -35,6 +40,7 @@
                 <td> {{ task.due }} </td>
                 <td> {{ task.description }} </td>
                 <td> {{ task.status }} </td>
+                <a href="{% url 'about' %}"><td>Delete</td></a>
             </tr>
         {% endif %}
 
