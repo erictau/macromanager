@@ -31,7 +31,7 @@ def signup(request):
             user = form.save()
             # This is how we log a user in via code
             login(request, user)
-            return redirect('organizations_index')
+            return redirect('organizations_new')
         else:
             error_message = 'Invalid sign up - try again'
     # A bad POST or a GET request, so render signup.html with an empty form
@@ -43,7 +43,7 @@ def signup(request):
 ### Organization 
 
 @login_required
-def organizations_index(request):
+def organizations_new(request):
     orgs = Organization.objects.all()
     org_form = OrgForm()
     context = { 'orgs': orgs, 'org_form': org_form }
