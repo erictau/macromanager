@@ -39,7 +39,11 @@ class Task(models.Model):
     name = models.CharField(max_length=50)
     due = models.DateField('Due Date')
     description = models.TextField(max_length=300)
-    status = models.CharField(max_length=100)
+    status = models.CharField(
+        max_length=3, 
+        choices=TASKSTATUS, 
+        default=TASKSTATUS[0][0]
+        )
     urgency = models.CharField(
         max_length=5,
         choices=TASKURGENCY, 
@@ -49,6 +53,9 @@ class Task(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        ordering = ['-due']
 
 class Employee(models.Model):
     # role = models.CharField(
