@@ -10,3 +10,7 @@ class UserForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('first_name','last_name', 'username', 'password1' ,'password2' )
+
+class OrgForm(ModelForm):
+    class Meta:
+        fields = ['name']
