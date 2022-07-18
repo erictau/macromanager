@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 
-from .models import Department, Organization
+from .models import Department, Organization, Task
 
 
 # Create your views here.
@@ -76,6 +76,6 @@ def tasks_create(request, department_id):
     return redirect('department_detail', department_id = department_id)
 
     
-
-def task_update(request):
+class TaskDetail(LoginRequiredMixin, DetailView):
+    model = Task
     pass
