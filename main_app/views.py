@@ -78,6 +78,12 @@ def departments_create(request):
         form.save()
     return redirect('about')
 
+@login_required
+def departments_detail(request):
+    department = Department.objects.get(id=department_id)
+    task_list = department.tasks.all().values_list('id')
+    return render(request, 'departments/detail.html', {'department':department, 'task':task })
+
 
 ### Tasks
 
