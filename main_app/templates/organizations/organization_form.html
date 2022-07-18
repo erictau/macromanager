@@ -20,7 +20,7 @@
 <form method='POST' action='{% url "organizations_create" %}'>
 {{ org_form.as_p }}
 {% csrf_token %}
-<input type="submit" value="Create Orgaization" class="btn">
+<input type="submit" value="Create Orgaization" class="btn btn-primary">
 </form>
 
 {% endblock %}

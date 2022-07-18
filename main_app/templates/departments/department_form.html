@@ -6,21 +6,22 @@
 {% csrf_token %}
 {% for dept in department_list %}
 
-    <a href="{% url 'department_index' org.id %}">
+    <a href="{% url 'department_detail' org.id %}">
         <div class="card">
             <div class="card-body">
-              Organization: {{ org.name }}
+              Department: {{ dept.name }}
             </div>
         </div>
     </a>
 
 {% endfor %}
 
-<h2>Create an Org</h2>
+<h2>Create a Dept</h2>
 
+<form action="departments_create">
 <div class="row g-3">
     <div class="col">
-      <input type="text" class="form-control" placeholder="Your Organiztion's Name" aria-label="name">
+      <input type="text" class="form-control" placeholder="Your Departments's Name" aria-label="name">
     </div>
     
     <div class="col-12">
