@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import render, redirect
-from .forms import OrgForm, UserForm, DepartmentForm, TaskForm
+from .forms import OrgForm, UserForm, DeptForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -60,10 +60,11 @@ def organizations_create(request):
 
 ### Departments
 
+@login_required
 def departments_new(request):
     dept = Department.objects.all()
-    department_form = DepartmentForm()
-    context = { 'dept': dept, 'department_form': department_form}
+    dept_form = DeptForm()
+    context = { 'dept': dept, 'dept_form': dept_form}
     return render(request, 'departments/department_form.html', context)
 
 @login_required
@@ -75,6 +76,12 @@ def tasks_create(request, department_id):
         task.save()
     return redirect('department_detail', department_id = department_id)
 
+@login_required
+def departments_create(request):
+    form = DeptForm(request.POST)
+    if form.is_valid():
+        form.save()
+    return redirect('')
     
 
 def task_update(request):

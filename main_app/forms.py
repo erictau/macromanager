@@ -18,7 +18,7 @@ class OrgForm(ModelForm):
         model = Organization
         fields = ['name']
 
-class DepartmentForm(ModelForm):
+class DeptForm(ModelForm):
     class Meta:
         model = Department
         fields = ['name']
