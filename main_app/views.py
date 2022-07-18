@@ -82,8 +82,10 @@ def tasks_create(request, department_id):
 def departments_create(request):
     form = DeptForm(request.POST)
     if form.is_valid():
+        department = form.save(commit=False)
+        department.org_id = request.user.employee.org.id
         form.save()
-    return redirect('')
+    return redirect('about')
     
 class TaskDetail(LoginRequiredMixin, DetailView):
     model = Task
