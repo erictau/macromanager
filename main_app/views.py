@@ -68,14 +68,21 @@ def departments_new(request):
     return render(request, 'departments/department_form.html', context)
 
 @login_required
+def tasks_create(request, department_id):
+    form = TaskForm(request.POST)
+    if form.is_valid():
+        task = form.save(commit=False)
+        task.department_id = department_id
+        task.save()
+    return redirect('department_detail', department_id = department_id)
+
+@login_required
 def departments_create(request):
     form = DeptForm(request.POST)
     if form.is_valid():
         form.save()
-    return redirect('department_list')
-
-def task_create(request):
-    pass
+    return redirect('')
+    
 
 def task_update(request):
     pass

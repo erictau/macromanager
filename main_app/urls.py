@@ -9,5 +9,6 @@ urlpatterns = [
     path('organizations/new', views.organizations_new, name='organizations_new'), 
     path('organizations/create', views.organizations_create, name='organizations_create'),
     path('departments/new', views.departments_new, name='departments_new'), 
-    path('departments/create', views.departments_create, name='departments_create'), 
+    path('departments/create', views.departments_create, name='department_create'), 
+    path('departments/<int:department_id>/tasks_create', views.tasks_create, name='tasks_create')
 ]
