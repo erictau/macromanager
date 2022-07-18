@@ -76,7 +76,7 @@ def departments_create(request):
         department = form.save(commit=False)
         department.org_id = request.user.employee.org.id
         form.save()
-    return redirect('about')
+    return redirect('departments_detail')
 
 @login_required
 def departments_detail(request):
