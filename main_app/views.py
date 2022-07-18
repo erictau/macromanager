@@ -4,6 +4,10 @@ from .forms import UserForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView
+
+from .models import Department, Organization
 
 
 # Create your views here.
@@ -34,3 +38,19 @@ def signup(request):
     form = UserForm()
     context = {'form': form, 'error_message': error_message}
     return render(request, 'registration/signup.html', context)
+
+
+### Organization 
+# Eric: Since we're creating an organization in the signup process, we may need to change this from a class based view to a custom view function. This is so we can add code that associates the logged in user with the organization that was just created. 
+class OrganizationCreate(LoginRequiredMixin, CreateView):
+    model = Organization
+    fields = '__all__'
+
+# Eric: Department Index will contain a list of all departments in an organization, and also a form for creating new Departments. Therefore, the CBV DepartmentCreate is not required. Instead, we will need to create a custom view function.
+class DepartmentList(LoginRequiredMixin, ListView):
+    model = Department
+
+class DepartmentDetail(LoginRequiredMixin, DetailView):
+    model = Department
+    
+
