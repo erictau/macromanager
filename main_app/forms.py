@@ -3,7 +3,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
-from main_app.models import Organization
+from main_app.models import Organization, Department
 
 class UserForm(UserCreationForm):
     first_name = forms.CharField()
@@ -16,4 +16,9 @@ class UserForm(UserCreationForm):
 class OrgForm(ModelForm):
     class Meta:
         model = Organization
+        fields = ['name']
+
+class DepartmentForm(ModelForm):
+    class Meta:
+        model = Department
         fields = ['name']

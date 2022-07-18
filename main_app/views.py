@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import render, redirect
-from .forms import OrgForm, UserForm
+from .forms import OrgForm, UserForm, DepartmentForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -66,4 +66,13 @@ class DepartmentList(LoginRequiredMixin, ListView):
 class DepartmentDetail(LoginRequiredMixin, DetailView):
     model = Department
     
+def deparments_new(request):
+    departments = Department.objects.all()
+    department_form = DepartmentForm()
+    context = { 'departments': departments, 'department_form': department_form}
 
+def task_create(request):
+    pass
+
+def task_update(request):
+    pass
