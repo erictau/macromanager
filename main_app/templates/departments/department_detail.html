@@ -13,7 +13,7 @@
             <div class="container-fluid">
                 <h1>{{department.name}}</h1>
                 <p>I hate this dept</p>
-                <a href="{% url 'about' %}"><btn>So I Delete It</btn></a>
+                <a href="{% url 'about' %}"><btn class="btn btn-danger">So I Delete It</btn></a>
 
                 <!-- Tasks Start -->
                 {% for task in department.task_set.all %}
@@ -26,7 +26,7 @@
                                 <td> {{ task.due }} </td>
                                 <td> {{ task.description }} </td>
                                 <td> {{ task.status }} </td>
-                                <a href="{% url 'about' %}"><td>Delete</td></a>
+                                <a href="{% url 'tasks_delete' %}"><td>Delete</td></a>
                             </tr>
                         {% endif %}
                         {% if task.urgency == 'MID' %}
@@ -35,7 +35,7 @@
                                 <td> {{ task.due }} </td>
                                 <td> {{ task.description }} </td>
                                 <td> {{ task.status }} </td>
-                                <a href="{% url 'about' %}"><td>Delete</td></a>
+                                <a href="{% url 'tasks_delete' %}"><td>Delete</td></a>
                             </tr>
                         {% endif %}
                         {% if task.urgency == 'HIGH' %}
@@ -44,7 +44,7 @@
                                 <td> {{ task.due }} </td>
                                 <td> {{ task.description }} </td>
                                 <td> {{ task.status }} </td>
-                                <a href="{% url 'about' %}"><td>Delete</td></a>
+                                <a href="{% url 'tasks_delete' %}"><td>Delete</td></a>
                             </tr>
                         {% endif %}
                         {% if task.urgency == 'EMERG' %}
@@ -53,7 +53,7 @@
                                 <td> {{ task.due }} </td>
                                 <td> {{ task.description }} </td>
                                 <td> {{ task.status }} </td>
-                                <a href="{% url 'about' %}"><td>Delete</td></a>
+                                <a href="{% url 'tasks_delete' %}"><td>Delete</td></a>
                             </tr>
                         {% endif %}
 
@@ -70,7 +70,7 @@
                 {{ task_form.as_p }}
                 {% csrf_token %}
 
-                <input type="submit" value="Create Department" class="btn btn-primary">
+                <input type="submit" value="Create Task" class="btn btn-primary">
                 </form>
             </div>
         </div>
