@@ -1,5 +1,25 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+
+<div class="card">
+    <div class="card-header">
+        {{ task.name }}
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{ task.name }}</h5>
+      <h6 class="card-title">{{ task.due }}</h6>
+      <p class="card-text">{{ task.description }}</p>
+      <a href="#" class="btn btn-primary">Go somewhere</a>
+      <div>{{ task.status }}</div>
+    </div>
+</div>
+
 {{ task.name }}
+<form action="{% url 'tasks_delete' task.department_id task.id %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="delete">
+</form>
+
 {% endblock %}

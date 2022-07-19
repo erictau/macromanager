@@ -2,27 +2,47 @@
 
 {% block content %}
 
+<div class="container">
+  <div class="row">
+      <div class="col">
+          <div>
+              
+          </div>
+      </div>
+      <div class="col-6">
+          <div class="container-fluid">
+            {% csrf_token %}
+            {% for dept in depts %}
+            
+                <a href="{% url 'departments_detail' dept.id %}">
+                    <div class="card">
+                        <div class="card-body">
+                          Department: {{ dept.name }}
+                        </div>
+                    </div>
+                </a>
+            
+            {% endfor %}
+            <h2>Create a Dept</h2>
 
-{% csrf_token %}
-{% for dept in depts %}
+            <form method="POST" action="{% url 'departments_create' %}">
 
-    <a href="{% url 'departments_detail' dept.id %}">
-        <div class="card">
-            <div class="card-body">
-              Department: {{ dept.name }}
-            </div>
-        </div>
-    </a>
+              {{ dept_form.as_p }}
+              {% csrf_token %}
+              <input type="submit" value="Create Department" class="btn btn-primary">
+            </form>
+          </div>
+      </div>
+      <div class="col">
+          <div>
+              
+          </div>
+      </div>
+  </div>
 
-{% endfor %}
+</div>
 
-<h2>Create a Dept</h2>
 
-<form method="POST" action="{% url 'departments_create' %}">
 
-  {{ dept_form.as_p }}
-  {% csrf_token %}
-  <input type="submit" value="Create Department" class="btn btn-primary">
-</form>
 
 {% endblock %}

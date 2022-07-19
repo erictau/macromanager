@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import render, redirect
+from django.urls import reverse, reverse_lazy
 from .forms import OrgForm, UserForm, DeptForm, TaskForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
@@ -7,7 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 
-from .models import Department, Organization, Task, Employee
+from .models import TASKSTATUS, Department, Organization, Task, Employee
 
 
 # Create your views here.
@@ -80,10 +81,16 @@ def departments_create(request):
 
 @login_required
 def departments_detail(request, department_id):
+<<<<<<< HEAD
     print("hello")
     department = Department.objects.get(id=department_id)
     tasks = department.task_set.all()
     return render(request, 'departments/depatment_detail.html', {'department':department, 'task':task })
+=======
+    department = Department.objects.get(id=department_id)
+    tasks = department.task_set.all()
+    return render(request, 'departments/department_detail.html', {'department':department, 'tasks': tasks })
+>>>>>>> main
 
 
 ### Tasks
@@ -101,3 +108,8 @@ class TaskDetail(LoginRequiredMixin, DetailView):
     model = Task
     template_name = 'tasks/detail.html'
     
+class TaskDelete(LoginRequiredMixin, DeleteView):
+    model = Task
+    def get_success_url(self, **kwargs):
+        print(reverse('departments_detail', args=[self.kwargs['department_id']]))
+        return reverse('departments_detail', args=[self.kwargs['department_id']])
