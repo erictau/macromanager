@@ -2,25 +2,54 @@
 
 {% block content %}
 
-
-{% for org in orgs %}
-
-    <a href="{% url 'about' %}">
-        <div class="card">
-            <div class="card-body">
-              Organization: {{ org.name }}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div>
+                
             </div>
         </div>
-    </a>
+        <div class="col-6">
+            <div class="container-fluid">
+                <form method="" action="{% url 'about' %}">
+                    {% for org in orgs %}
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            Sel
+                        </label>
+                    </div>
+                    <a href="{% url 'about' %}">
+                        <div class="card">
+                            <div class="card-body">
+                            Organization: {{ org.name }}
+                            </div>
+                        </div>
+                    </a>
+                    
+                    {% endfor %}
+                    <input type="submit" value="SELECT ORG" class="btn btn-primary">
+                </form>
 
-{% endfor %}
+                <h2>Create an Org</h2>
 
-<h2>Create an Org</h2>
+                <form method='POST' action='{% url "organizations_create" %}'>
+                {{ org_form.as_p }}
+                {% csrf_token %}
+                <input type="submit" value="Create Organization" class="btn btn-primary">
+                </form>
+            </div>
+        </div>
+        <div class="col">
+            <div>
+                
+            </div>
+        </div>
+    </div>
 
-<form method='POST' action='{% url "organizations_create" %}'>
-{{ org_form.as_p }}
-{% csrf_token %}
-<input type="submit" value="Create Organization" class="btn btn-primary">
-</form>
+</div>
+
+
+
 
 {% endblock %}
