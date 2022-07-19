@@ -8,6 +8,7 @@ urlpatterns = [
     path('accounts/signup/', views.signup, name='signup'),
     path('organizations/new', views.organizations_new, name='organizations_new'), 
     path('organizations/create', views.organizations_create, name='organizations_create'),
+    path('organizations/assoc_employee', views.assoc_org_employee, name='assoc_org_employee'),
     path('departments/index', views.departments_index, name='departments_index'), 
     path('departments/create', views.departments_create, name='departments_create'),
     path('departments/<int:department_id>/', views.departments_detail, name='departments_detail'),
