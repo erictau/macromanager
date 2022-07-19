@@ -2,6 +2,7 @@
 
 {% block content %}
 
+
 <div class="card">
     <div class="card-header">
         {{ task.name }}
@@ -14,5 +15,11 @@
       <div>{{ task.status }}</div>
     </div>
 </div>
+
+{{ task.name }}
+<form action="{% url 'tasks_delete' task.department_id task.id %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="delete">
+</form>
 
 {% endblock %}
