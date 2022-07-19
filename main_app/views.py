@@ -84,6 +84,7 @@ def departments_detail(request, department_id):
     department = Department.objects.get(id=department_id)
     task_form = TaskForm()
     tasks = department.task_set.all()
+    print(tasks)
     return render(request, 'departments/department_detail.html', {'department':department, 'tasks': tasks, 'task_form': task_form })
 
 
