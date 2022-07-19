@@ -77,7 +77,13 @@ def departments_create(request):
         department = form.save(commit=False)
         department.org_id = request.user.employee.org.id
         form.save()
-    return redirect('about')
+    return redirect('departments_detail')
+
+@login_required
+def departments_detail(request):
+    department = Department.objects.get(id=department_id)
+    task_list = department.tasks.all().values_list('id')
+    return render(request, 'departments/detail.html', {'department':department, 'task':task })
 
 
 ### Tasks
@@ -100,4 +106,4 @@ class TaskDelete(LoginRequiredMixin, DeleteView):
     def get_url_params(self):
         return self.kwargs
         
-    success_url = reverse('departments_detail', args=[get_url_params()['department_id']])
+    # success_url = reverse('departments_detail', args=[get_url_params()['department_id']])
