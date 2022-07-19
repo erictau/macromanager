@@ -65,11 +65,7 @@ def organizations_create(request):
 
 @login_required
 def departments_index(request):
-<<<<<<< HEAD
-    depts = Department.objects.filter(org_id=request.user.employee.org_id)
-=======
     depts = Department.objects.filter(org_id = request.user.employee.org_id)
->>>>>>> main
     dept_form = DeptForm()
     context = { 'depts': depts, 'dept_form': dept_form}
     return render(request, 'departments/department_form.html', context)
