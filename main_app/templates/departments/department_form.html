@@ -4,9 +4,9 @@
 
 
 {% csrf_token %}
-{% for dept in department_list %}
+{% for dept in depts %}
 
-    <a href="{% url 'department_detail' org.id %}">
+    <a href="{% url 'departments_detail' dept.id %}">
         <div class="card">
             <div class="card-body">
               Department: {{ dept.name }}
