@@ -58,16 +58,16 @@ def organizations_create(request):
         form.save()
     org = Organization.objects.get(name=request.POST['name'])
     Employee.objects.create(user_id=request.user.id, org_id=org.id)
-    return redirect('departments_new')
+    return redirect('departments_index')
 
 
 ### Departments
 
 @login_required
-def departments_new(request):
-    dept = Department.objects.all()
+def departments_index(request):
+    depts = Department.objects.all()
     dept_form = DeptForm()
-    context = { 'dept': dept, 'dept_form': dept_form}
+    context = { 'depts': depts, 'dept_form': dept_form}
     return render(request, 'departments/department_form.html', context)
 
 @login_required
@@ -77,7 +77,7 @@ def departments_create(request):
         department = form.save(commit=False)
         department.org_id = request.user.employee.org.id
         form.save()
-    return redirect('departments_detail')
+    return redirect('departments_index')
 
 @login_required
 def departments_detail(request):
