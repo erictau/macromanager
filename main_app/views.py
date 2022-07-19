@@ -121,7 +121,7 @@ class TaskDelete(LoginRequiredMixin, DeleteView):
 ### Employees
 
 def employees_detail(request, employee_id):
-    tasks = Task.objects.filter(id = request.user.employee.task_id)
+    tasks = employee.task_set.all()
     return render(
         request, 
         'employees/detail.html', 
