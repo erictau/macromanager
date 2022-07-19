@@ -79,10 +79,11 @@ def departments_create(request):
     return redirect('departments_index')
 
 @login_required
-def departments_detail(request):
+def departments_detail(request, department_id):
+    print("hello")
     department = Department.objects.get(id=department_id)
-    task_list = department.tasks.all().values_list('id')
-    return render(request, 'departments/detail.html', {'department':department, 'task':task })
+    tasks = department.task_set.all()
+    return render(request, 'departments/depatment_detail.html', {'department':department, 'task':task })
 
 
 ### Tasks
