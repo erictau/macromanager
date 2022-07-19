@@ -60,6 +60,11 @@ def organizations_create(request):
     Employee.objects.create(user_id=request.user.id, org_id=org.id)
     return redirect('departments_index')
 
+@login_required
+def assoc_org_employee(request):
+    Employee.objects.create(user_id=request.user.id, org_id=request.POST['org_id'])
+    return redirect('home')
+
 
 ### Departments
 
