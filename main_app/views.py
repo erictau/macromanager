@@ -22,6 +22,8 @@ def index(request):
     pass
 
 def signup(request):
+    if request.user.id:
+        return redirect('home')
     error_message = ''
     if request.method == 'POST':
         # This is how to create a 'user' form object
@@ -45,6 +47,8 @@ def signup(request):
 
 @login_required
 def organizations_new(request):
+    if hasattr(request.user, 'employee') and hasattr(request.user.employee, 'org_id'):
+        return redirect('home')
     orgs = Organization.objects.all()
     org_form = OrgForm()
     context = { 'orgs': orgs, 'org_form': org_form }
@@ -52,9 +56,10 @@ def organizations_new(request):
 
 @login_required
 def organizations_create(request):
+    if hasattr(request.user, 'employee') and hasattr(request.user.employee, 'org_id'):
+        return redirect('home')
     form = OrgForm(request.POST)
     if form.is_valid():
-        # This is where we would associate an org to an employee id.
         form.save()
     org = Organization.objects.get(name=request.POST['name'])
     Employee.objects.create(user_id=request.user.id, org_id=org.id)
