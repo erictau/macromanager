@@ -1,6 +1,5 @@
-from django.shortcuts import render
-from django.shortcuts import render, redirect
-from django.urls import reverse, reverse_lazy
+from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
 from .forms import OrgForm, UserForm, DeptForm, TaskForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
@@ -8,7 +7,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 
-from .models import TASKSTATUS, Department, Organization, Task, Employee
+
+from .models import Department, Organization, Task, Employee
 
 
 # Create your views here.
@@ -86,7 +86,9 @@ def departments_create(request):
 
 @login_required
 def departments_detail(request, department_id):
-    department = Department.objects.get(id=department_id)
+    department = get_object_or_404(Department, id=department_id)
+    if department.org_id != request.user.employee.org_id:
+        return redirect('departments_index')
     task_form = TaskForm()
     tasks = department.task_set.all()
     print(tasks)
