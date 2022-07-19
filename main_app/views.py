@@ -87,6 +87,9 @@ def departments_detail(request, department_id):
     print(tasks)
     return render(request, 'departments/department_detail.html', {'department':department, 'tasks': tasks, 'task_form': task_form })
 
+class DepartmentDelete(LoginRequiredMixin, DeleteView):
+	model = Department
+	success_url = "/"
 
 ### Tasks
 

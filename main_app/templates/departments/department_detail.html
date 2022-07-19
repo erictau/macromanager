@@ -13,7 +13,7 @@
             <div class="container-fluid">
                 <h1>{{department.name}}</h1>
                 <p>I hate this dept</p>
-                <a href="{% url 'about' %}"><btn>So I Delete It</btn></a>
+                <a href="{% url 'departments_delete' department.id %}"><btn>So I Delete It</btn></a>
 
                 <!-- Tasks Start -->
                     <table>
@@ -23,7 +23,7 @@
                                 <td> {{ task.name }} </td>
                                 <td> {{ task.due }} </td>
                                 <td> {{ task.description }} </td>
-                                <td> {{ task.status_display }} </td>
+                                <td> {{ task.get_status_display }} </td>
                                 <td><a href="{% url 'tasks_delete' department.id task.id %}">Delete</a></td>
                             </tr>
                         {% endif %}
@@ -32,7 +32,7 @@
                                 <td> {{ task.name }} </td>
                                 <td> {{ task.due }} </td>
                                 <td> {{ task.description }} </td>
-                                <td> {{ task.status_display }} </td>
+                                <td> {{ task.get_status_display }} </td>
                                 <td><a href="{% url 'tasks_delete' department.id task.id %}">Delete</a></td>
                             </tr>
                         {% endif %}
@@ -41,7 +41,7 @@
                                 <td> {{ task.name }} </td>
                                 <td> {{ task.due }} </td>
                                 <td> {{ task.description }} </td>
-                                <td> {{ task.status_display }} </td>
+                                <td> {{ task.get_status_display}} </td>
                                 <td><a href="{% url 'tasks_delete' department.id task.id %}">Delete</a></td>
                             </tr>
                         {% endif %}
@@ -50,7 +50,7 @@
                                 <td> {{ task.name }} </td>
                                 <td> {{ task.due }} </td>
                                 <td> {{ task.description }} </td>
-                                <td> {{ task.status_display }} </td>
+                                <td> {{ task.get_status_display }} </td>
                                 <td><a href="{% url 'tasks_delete' department.id task.id %}">Delete</a></td>
                             </tr>
                         {% endif %}
