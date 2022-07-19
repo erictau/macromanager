@@ -65,7 +65,11 @@ def organizations_create(request):
 
 @login_required
 def departments_index(request):
+<<<<<<< HEAD
     depts = Department.objects.filter(org_id=request.user.employee.org_id)
+=======
+    depts = Department.objects.filter(org_id = request.user.employee.org_id)
+>>>>>>> main
     dept_form = DeptForm()
     context = { 'depts': depts, 'dept_form': dept_form}
     return render(request, 'departments/department_form.html', context)
@@ -82,8 +86,9 @@ def departments_create(request):
 @login_required
 def departments_detail(request, department_id):
     department = Department.objects.get(id=department_id)
+    task_form = TaskForm()
     tasks = department.task_set.all()
-    return render(request, 'departments/department_detail.html', {'department':department, 'tasks': tasks })
+    return render(request, 'departments/department_detail.html', {'department':department, 'tasks': tasks, 'task_form': task_form })
 
 
 ### Tasks
@@ -95,7 +100,7 @@ def tasks_create(request, department_id):
         task = form.save(commit=False)
         task.department_id = department_id
         task.save()
-    return redirect('department_detail', department_id = department_id)
+    return redirect('departments_detail', department_id = department_id)
 
 class TaskDetail(LoginRequiredMixin, DetailView):
     model = Task
@@ -104,5 +109,4 @@ class TaskDetail(LoginRequiredMixin, DetailView):
 class TaskDelete(LoginRequiredMixin, DeleteView):
     model = Task
     def get_success_url(self, **kwargs):
-        print(reverse('departments_detail', args=[self.kwargs['department_id']]))
         return reverse('departments_detail', args=[self.kwargs['department_id']])
