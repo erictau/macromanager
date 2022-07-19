@@ -1,4 +1,6 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %} 
+{% block content %}
+
 <h2>These are your tasks {{ request.user.first_name}} {{ request.user.last_name }}.</h1>
 {% for task in tasks %}
 <div class="card">
@@ -7,4 +9,5 @@
   <div class="card-body">Due Date: {{ task.due }}</div>
   <div class="card-body">Descrption: {{ task.description}}</div>
 </div>
+{% endfor %}
 {% endblock %}
