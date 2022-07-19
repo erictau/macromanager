@@ -54,7 +54,6 @@ def organizations_new(request):
 def organizations_create(request):
     form = OrgForm(request.POST)
     if form.is_valid():
-        # This is where we would associate an org to an employee id.
         form.save()
     org = Organization.objects.get(name=request.POST['name'])
     Employee.objects.create(user_id=request.user.id, org_id=org.id)
