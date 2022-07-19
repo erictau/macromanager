@@ -65,7 +65,7 @@ def organizations_create(request):
 
 @login_required
 def departments_index(request):
-    depts = Department.objects.all()
+    depts = Department.objects.filter(org_id=request.user.employee.org_id)
     dept_form = DeptForm()
     context = { 'depts': depts, 'dept_form': dept_form}
     return render(request, 'departments/department_form.html', context)
@@ -81,16 +81,9 @@ def departments_create(request):
 
 @login_required
 def departments_detail(request, department_id):
-<<<<<<< HEAD
-    print("hello")
-    department = Department.objects.get(id=department_id)
-    tasks = department.task_set.all()
-    return render(request, 'departments/depatment_detail.html', {'department':department, 'task':task })
-=======
     department = Department.objects.get(id=department_id)
     tasks = department.task_set.all()
     return render(request, 'departments/department_detail.html', {'department':department, 'tasks': tasks })
->>>>>>> main
 
 
 ### Tasks
