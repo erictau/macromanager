@@ -65,7 +65,7 @@ def organizations_create(request):
 
 @login_required
 def departments_index(request):
-    depts = Department.objects.all()
+    depts = Department.objects.filter(org_id = request.user.employee.org_id)
     dept_form = DeptForm()
     context = { 'depts': depts, 'dept_form': dept_form}
     return render(request, 'departments/department_form.html', context)
@@ -105,5 +105,4 @@ class TaskDetail(LoginRequiredMixin, DetailView):
 class TaskDelete(LoginRequiredMixin, DeleteView):
     model = Task
     def get_success_url(self, **kwargs):
-        print(reverse('departments_detail', args=[self.kwargs['department_id']]))
         return reverse('departments_detail', args=[self.kwargs['department_id']])
