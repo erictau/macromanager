@@ -16,17 +16,15 @@
                 <a href="{% url 'about' %}"><btn>So I Delete It</btn></a>
 
                 <!-- Tasks Start -->
-                {% for task in department.task_set.all %}
                     <table>
-                    {% csrf_token %}
-                    {% for task in task_list %}
+                    {% for task in tasks %}
                         {% if task.urgency == 'LOW' %}
                             <tr>
                                 <td> {{ task.name }} </td>
                                 <td> {{ task.due }} </td>
                                 <td> {{ task.description }} </td>
-                                <td> {{ task.status }} </td>
-                                <a href="{% url 'about' %}"><td>Delete</td></a>
+                                <td> {{ task.status_display }} </td>
+                                <td><a href="{% url 'tasks_delete' department.id task.id %}">Delete</a></td>
                             </tr>
                         {% endif %}
                         {% if task.urgency == 'MID' %}
@@ -34,8 +32,8 @@
                                 <td> {{ task.name }} </td>
                                 <td> {{ task.due }} </td>
                                 <td> {{ task.description }} </td>
-                                <td> {{ task.status }} </td>
-                                <a href="{% url 'about' %}"><td>Delete</td></a>
+                                <td> {{ task.status_display }} </td>
+                                <td><a href="{% url 'tasks_delete' department.id task.id %}">Delete</a></td>
                             </tr>
                         {% endif %}
                         {% if task.urgency == 'HIGH' %}
@@ -43,8 +41,8 @@
                                 <td> {{ task.name }} </td>
                                 <td> {{ task.due }} </td>
                                 <td> {{ task.description }} </td>
-                                <td> {{ task.status }} </td>
-                                <a href="{% url 'about' %}"><td>Delete</td></a>
+                                <td> {{ task.status_display }} </td>
+                                <td><a href="{% url 'tasks_delete' department.id task.id %}">Delete</a></td>
                             </tr>
                         {% endif %}
                         {% if task.urgency == 'EMERG' %}
@@ -52,16 +50,14 @@
                                 <td> {{ task.name }} </td>
                                 <td> {{ task.due }} </td>
                                 <td> {{ task.description }} </td>
-                                <td> {{ task.status }} </td>
-                                <a href="{% url 'about' %}"><td>Delete</td></a>
+                                <td> {{ task.status_display }} </td>
+                                <td><a href="{% url 'tasks_delete' department.id task.id %}">Delete</a></td>
                             </tr>
                         {% endif %}
-
+                        {% empty %}
+                            <h2>Take the day off</h2>
                     {% endfor %}
                     </table>
-                {% empty %}
-                    <h2>Take the day off</h2>
-                {% endfor %}
 
                 <h2>Create a Task</h2>
 
