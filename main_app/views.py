@@ -126,4 +126,4 @@ def employees_detail(request, employee_id):
     return render(
         request, 
         'employees/employee_detail.html', 
-        {'tasks': tasks, })
+        {'tasks': tasks, 'employee': employee})
