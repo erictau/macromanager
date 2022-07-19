@@ -116,3 +116,12 @@ class TaskDelete(LoginRequiredMixin, DeleteView):
     model = Task
     def get_success_url(self, **kwargs):
         return reverse('departments_detail', args=[self.kwargs['department_id']])
+
+### Employees
+
+def employees_detail(request, employee_id):
+    tasks = Task.objects.filter(id = request.user.employee.task_id)
+    return render(
+        request, 
+        'employees/detail.html', 
+        {'tasks': tasks, })
