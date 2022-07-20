@@ -7,7 +7,7 @@
   <div class="card-body">Name: {{ employee.user.first_name }} {{ employee.user.last_name}}</div>
   <div class="card-body">Department: {{ employee.department }}</div>
   <div class="card-body">Assigned Tasks: 
-    {% for tasks in employee.task.all %}
+    {% for task in employee.task.all %}
     <div>Task Name: {{ task.name }}</div>
     <div>Task Due: {{ task.due }}</div>
     <div>Task Status: {{ task.get_status_display }}</div>
