@@ -23,7 +23,11 @@ class DeptForm(ModelForm):
         model = Department
         fields = ['name']
 
-class TaskForm(ModelForm):
-    class Meta:
-        model = Task
-        fields = '__all__'
+class TaskForm(forms.Form):
+        # model = Task
+        name = forms.CharField()
+        date = forms.DateField(widget = forms.SelectDateWidget)
+        description = forms.CharField(widget = forms.Textarea)
+        status = forms.CharField()
+        urgency = forms.CharField()
+        
