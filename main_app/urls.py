@@ -16,7 +16,10 @@ urlpatterns = [
     path('departments/<int:pk>/delete/', views.DepartmentDelete.as_view(), name='departments_delete'), 
     path('departments/<int:department_id>/tasks_create/', views.tasks_create, name='tasks_create'),
     path('tasks/<int:pk>', views.TaskDetail.as_view(), name='tasks_detail'),
+    path('departments/<int:department_id>/tasks/<int:pk>/delete', views.TaskDelete.as_view(), name='tasks_delete'),
+    path('employees/<int:employee_id>/', views.employees_detail, name='employees_detail'), 
+    path('employees/', views.employees_index, name='employees_index'), 
+    path('employees/<int:pk>/update/', views.EmployeeUpdate.as_view(), name='employee_update')
     path('tasks/<int:pk>/update/', views.TaskUpdate.as_view(), name='tasks_update'),
     path('departments/<int:department_id>/tasks/<int:pk>/delete/', views.TaskDelete.as_view(), name='tasks_delete'),
-    path('employees/<int:employee_id>/', views.employees_detail, name='employees_detail')
 ]
