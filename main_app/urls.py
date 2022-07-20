@@ -14,8 +14,9 @@ urlpatterns = [
     path('departments/<int:department_id>/', views.departments_detail, name='departments_detail'),
     path('departments/<int:pk>/update/', views.DepartmentUpdate.as_view(), name='departments_update'),
     path('departments/<int:pk>/delete/', views.DepartmentDelete.as_view(), name='departments_delete'), 
-    path('departments/<int:department_id>/tasks_create', views.tasks_create, name='tasks_create'),
+    path('departments/<int:department_id>/tasks_create/', views.tasks_create, name='tasks_create'),
     path('tasks/<int:pk>', views.TaskDetail.as_view(), name='tasks_detail'),
-    path('departments/<int:department_id>/tasks/<int:pk>/delete', views.TaskDelete.as_view(), name='tasks_delete'),
+    path('tasks/<int:pk>/update/', views.TaskUpdate.as_view(), name='tasks_update'),
+    path('departments/<int:department_id>/tasks/<int:pk>/delete/', views.TaskDelete.as_view(), name='tasks_delete'),
     path('employees/<int:employee_id>/', views.employees_detail, name='employees_detail')
 ]
