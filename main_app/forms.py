@@ -28,7 +28,7 @@ class TaskForm(ModelForm):
         model = Task
         fields = '__all__'
 
-class Employee(ModelForm):
+class EmployeeForm(ModelForm):
     class Meta:
         model = Employee
         fields = ['dept']
