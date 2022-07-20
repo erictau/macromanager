@@ -52,7 +52,7 @@ class Task(models.Model):
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.get_status_display()} on {self.status}"
+        return self.name
 
     class Meta:
         ordering = ['-due']
