@@ -1,7 +1,7 @@
 from telnetlib import STATUS
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-from .forms import OrgForm, UserForm, DeptForm, TaskForm
+from .forms import OrgForm, UserForm, DeptForm, TaskForm, EmployeeForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -172,10 +172,13 @@ class TaskDelete(LoginRequiredMixin, DeleteView):
 def employees_detail(request, employee_id):
     employee = Employee.objects.get(id=employee_id)
     tasks = employee.task.all()
+    departments = employee.dept.all()
+    excludedept = employee.dept.all().values_list('id')
+    avldepts = Department.objects.filter(org_id = employee.org_id).exclude(id__in=excludedept)
     return render(
         request, 
         'employees/employee_detail.html', 
-        {'tasks': tasks, 'employee': employee})
+        {'tasks': tasks, 'employee': employee, 'departments': departments, 'avldepts': avldepts})
 
 @login_required
 def employees_index(request):
@@ -183,6 +186,15 @@ def employees_index(request):
     return render(request, 'employees/employee_index.html',{'employees': employees})
 
 
-class EmployeeUpdate(LoginRequiredMixin, UpdateView):
-    model = Employee
-    feilds = ['dept', 'task']
+# class EmployeeUpdate(LoginRequiredMixin, UpdateView):
+#     model = Employee
+#     feilds = ['dept', 'task']
+
+@login_required
+def assoc_dept_employee(request, employee_id): 
+    employee = Employee.objects.get(id = employee_id)
+    # form = EmployeeForm(request.POST)
+    print(request.POST['dept'])
+    employee.dept.add(request.POST['dept'])
+    return redirect('employees_detail', employee_id)
+

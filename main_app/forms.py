@@ -3,7 +3,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
-from main_app.models import Organization, Department, Task
+from main_app.models import Organization, Department, Task, Employee
 
 TASKURGENCY = (
     ('LOW', 'Low Priority'), 
@@ -42,4 +42,3 @@ class TaskForm(forms.Form):
         description = forms.CharField(widget = forms.Textarea)
         status = forms.MultipleChoiceField(choices = TASKSTATUS)
         urgency = forms.MultipleChoiceField(choices = TASKURGENCY)
-        

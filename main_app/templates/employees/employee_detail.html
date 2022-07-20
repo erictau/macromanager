@@ -2,13 +2,35 @@
 {% block content %}
 
 <h2>These are your tasks {{ employee.user.first_name}} {{ employee.user.last_name }}.</h1>
+
+{% for dept in departments.all %}
+<div> {{dept.name}}</div>
+{% endfor %}
+
+
+<form action="{% url 'assoc_dept_employee' employee.id %}" method="post">
+  {% csrf_token %}
+  <div>
+    <select name="dept" class="form-select" id="autoSizingSelect">
+    	<option selected>Add new department</option>
+    		{% for dept in avldepts %}
+    		<option value="{{ dept.id }}">{{ dept.name }}</option>
+        {% endfor %}
+    		</select>
+      </div>
+      <input type="submit" value="Add Department" class="btn btn-primary">
+    </form>
+
+
+
 {% for task in tasks %}
 <a href= '{% url "tasks_detail" task.id %}'>
 <div class="card">
   <div class="card-body">Task: {{ task.name }}</div>
   <div class="card-body">Task Urgency: {{ task.get_urgency_display}}</div>
   <div class="card-body">Due Date: {{ task.due }}</div>
-  <div class="card-body">Descrption: {{ task.description}}</div>
+  <div class="card-body">Descrption: {{ task.description }}</div>
+  <div class="card-body">Task Department: {{ task.department.name }}</div>
 </div>
 </a>
 {% endfor %}
