@@ -166,6 +166,9 @@ class TaskDelete(LoginRequiredMixin, DeleteView):
     def get_success_url(self, **kwargs):
         return reverse('departments_detail', args=[self.kwargs['department_id']])
 
+def assoc_employee_task(request):
+    pass
+
 ### Employees
 
 @login_required
