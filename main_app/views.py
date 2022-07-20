@@ -1,6 +1,5 @@
-from django.shortcuts import render
-from django.shortcuts import render, redirect
-from django.urls import reverse, reverse_lazy
+from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
 from .forms import OrgForm, UserForm, DeptForm, TaskForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
@@ -8,7 +7,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 
-from .models import TASKSTATUS, Department, Organization, Task, Employee
+
+from .models import Department, Organization, Task, Employee
 
 
 # Create your views here.
@@ -22,6 +22,8 @@ def index(request):
     pass
 
 def signup(request):
+    if request.user.id:
+        return redirect('home')
     error_message = ''
     if request.method == 'POST':
         # This is how to create a 'user' form object
@@ -45,6 +47,8 @@ def signup(request):
 
 @login_required
 def organizations_new(request):
+    if hasattr(request.user, 'employee') and hasattr(request.user.employee, 'org_id'):
+        return redirect('home')
     orgs = Organization.objects.all()
     org_form = OrgForm()
     context = { 'orgs': orgs, 'org_form': org_form }
@@ -52,13 +56,19 @@ def organizations_new(request):
 
 @login_required
 def organizations_create(request):
+    if hasattr(request.user, 'employee') and hasattr(request.user.employee, 'org_id'):
+        return redirect('home')
     form = OrgForm(request.POST)
     if form.is_valid():
-        # This is where we would associate an org to an employee id.
         form.save()
     org = Organization.objects.get(name=request.POST['name'])
     Employee.objects.create(user_id=request.user.id, org_id=org.id)
     return redirect('departments_index')
+
+@login_required
+def assoc_org_employee(request):
+    Employee.objects.create(user_id=request.user.id, org_id=request.POST['org_id'])
+    return redirect('home')
 
 
 ### Departments
@@ -81,12 +91,17 @@ def departments_create(request):
 
 @login_required
 def departments_detail(request, department_id):
-    department = Department.objects.get(id=department_id)
+    department = get_object_or_404(Department, id=department_id)
+    if department.org_id != request.user.employee.org_id:
+        return redirect('departments_index')
     task_form = TaskForm()
     tasks = department.task_set.all()
     print(tasks)
     return render(request, 'departments/department_detail.html', {'department':department, 'tasks': tasks, 'task_form': task_form })
 
+class DepartmentDelete(LoginRequiredMixin, DeleteView):
+	model = Department
+	success_url = "/"
 
 ### Tasks
 
@@ -106,3 +121,13 @@ class TaskDelete(LoginRequiredMixin, DeleteView):
     model = Task
     def get_success_url(self, **kwargs):
         return reverse('departments_detail', args=[self.kwargs['department_id']])
+
+### Employees
+
+def employees_detail(request, employee_id):
+    employee = Employee.objects.get(id=employee_id)
+    tasks = employee.task.all()
+    return render(
+        request, 
+        'employees/employee_detail.html', 
+        {'tasks': tasks, 'employee': employee})
