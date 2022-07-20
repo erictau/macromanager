@@ -2,24 +2,36 @@
 
 {% block content %}
 
+<div class="container mt-4">
 
-<div class="card">
-    <div class="card-header">
-        {{ task.name }}
-    </div>
-    <div class="card-body">
-      <h5 class="card-title">{{ task.name }}</h5>
-      <h6 class="card-title">{{ task.due }}</h6>
-      <p class="card-text">{{ task.description }}</p>
-      <a href="#" class="btn btn-primary">Go somewhere</a>
-      <div>{{ task.get_status_display }}</div>
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Task: {{ task.name }}</h5>
+            <p class="card-text">Department: {{ task.department.name }}
+                <br>
+                Employees: 
+                {% for employee in task.employee_set.all %}
+                    {{ employee.user.first_name }} {{ employee.user.last_name }}, 
+                {% empty %}
+                    None Assigned
+                {% endfor %}
+            </p>
+        </div> 
+        <div class="card-body">
+            <p>
+                Due Date: {{ task.due }} 
+                <br>
+                Status: {{ task.get_status_display }}
+                <br>
+                Urgency: {{ task.get_urgency_display }} 
+                <br>
+                Description: {{ task.description }}
+            </p>
+
+            <a class="btn btn-secondary" href="{% url 'tasks_update' task.id %}">Update Task</a>
+            <a class="btn btn-danger" href="{% url 'tasks_delete' task.department_id task.id %}">Delete Task</a>
+        </div>
     </div>
 </div>
-
-<a class="btn btn-secondary" href="{% url 'tasks_update' task.id %}">Update Task</a>
-<form action="{% url 'tasks_delete' task.department_id task.id %}" method="POST">
-    {% csrf_token %}
-    <input class="btn btn-danger" type="submit" value="Delete Task">
-</form>
 
 {% endblock %}
