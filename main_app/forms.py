@@ -26,4 +26,4 @@ class DeptForm(ModelForm):
 class TaskForm(ModelForm):
     class Meta:
         model = Task
-        exclude = ['department']
+        fields = '__all__'

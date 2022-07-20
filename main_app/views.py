@@ -111,6 +111,20 @@ def tasks_create(request, department_id):
         name = request.POST.get('name'), due = request.POST.get('due'), description = request.POST.get('description'),
         status = request.POST.get('status'), urgency = request.POST.get('urgency'), department_id = department_id
      )
+
+    # Eric: Icebox - Figure out how to validate the request.POST data before saving to DB.
+    # new_task_dict = {}
+    # for prop in request.POST:
+    #     new_task_dict[prop] = request.POST[prop]
+    # # new_task_dict['department_id'] = department_id
+    # print(new_task_dict)
+    # request.POST.department_id = department_id
+    # task_form = TaskForm(new_task_dict)
+    # print(task_form.instance)
+    # if task_form.is_valid():
+    #     task_form.save(commit=False)
+    #     task_form.department_id = department_id
+    #     task_form.save()
     return redirect('departments_detail', department_id = department_id)
 
 class TaskDetail(LoginRequiredMixin, DetailView):
