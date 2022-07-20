@@ -99,6 +99,11 @@ def departments_detail(request, department_id):
     print(tasks)
     return render(request, 'departments/department_detail.html', {'department':department, 'tasks': tasks, 'task_form': task_form })
 
+class DepartmentUpdate(LoginRequiredMixin, UpdateView):
+    model = Department
+    fields = ['name']
+    template_name = 'departments/department_update.html'
+
 class DepartmentDelete(LoginRequiredMixin, DeleteView):
 	model = Department
 	success_url = "/"
