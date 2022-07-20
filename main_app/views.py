@@ -98,7 +98,6 @@ def departments_detail(request, department_id):
     tasks = department.task_set.all()
     # employees = list(Employee.objects.filter(dept = department_id))
     employees = department.employee_set.all()
-    print(employees)
     return render(request, 'departments/department_detail.html', {'department':department, 'tasks': tasks, 'task_form': task_form, 'employees': employees })
 
 class DepartmentUpdate(LoginRequiredMixin, UpdateView):
