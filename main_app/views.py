@@ -149,6 +149,11 @@ class TaskDelete(LoginRequiredMixin, DeleteView):
     def get_success_url(self, **kwargs):
         return reverse('departments_detail', args=[self.kwargs['department_id']])
 
+@login_required
+def assoc_task_employee(request, task_id):
+    employee = Employee.objects.get(id = request.user.employee_id)
+
+
 ### Employees
 
 @login_required
@@ -177,7 +182,6 @@ def employees_index(request):
 def assoc_dept_employee(request, employee_id): 
     employee = Employee.objects.get(id = employee_id)
     # form = EmployeeForm(request.POST)
-    print(request.POST['dept'])
     employee.dept.add(request.POST['dept'])
     return redirect('employees_detail', employee_id)
 
