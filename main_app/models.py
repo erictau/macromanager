@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import date
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 
 TASKURGENCY = (
@@ -34,6 +35,9 @@ class Department(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('departments_detail', kwargs={'department_id': self.id})
 
 class Task(models.Model):
     name = models.CharField(max_length=50)

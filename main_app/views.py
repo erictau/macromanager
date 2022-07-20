@@ -99,6 +99,11 @@ def departments_detail(request, department_id):
     print(tasks)
     return render(request, 'departments/department_detail.html', {'department':department, 'tasks': tasks, 'task_form': task_form })
 
+class DepartmentUpdate(LoginRequiredMixin, UpdateView):
+    model = Department
+    fields = ['name']
+    template_name = 'departments/department_update.html'
+
 class DepartmentDelete(LoginRequiredMixin, DeleteView):
 	model = Department
 	success_url = "/"
@@ -130,6 +135,13 @@ def tasks_create(request, department_id):
 class TaskDetail(LoginRequiredMixin, DetailView):
     model = Task
     template_name = 'tasks/detail.html'
+
+class TaskUpdate(LoginRequiredMixin, UpdateView):
+    model = Task
+    template_name = 'tasks/form.html'
+    fields = '__all__'
+    exclude = ('department_id')
+    # Creating the custom task form may make it slightly more difficult to use CBV's to update the task. 
     
 class TaskDelete(LoginRequiredMixin, DeleteView):
     model = Task
