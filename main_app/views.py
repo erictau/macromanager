@@ -107,11 +107,10 @@ class DepartmentDelete(LoginRequiredMixin, DeleteView):
 
 @login_required
 def tasks_create(request, department_id):
-    form = TaskForm(request.POST)
-    if form.is_valid():
-        task = form.save(commit=False)
-        task.department_id = department_id
-        task.save()
+    new_task = Task.objects.create(
+        name = request.POST.get('name'), due = request.POST.get('due'), description = request.POST.get('description'),
+        status = request.POST.get('status'), urgency = request.POST.get('urgency'), department_id = department_id
+     )
     return redirect('departments_detail', department_id = department_id)
 
 class TaskDetail(LoginRequiredMixin, DetailView):

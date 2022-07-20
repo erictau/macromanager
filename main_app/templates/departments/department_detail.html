@@ -13,7 +13,11 @@
             <div class="container-fluid">
                 <h1>{{department.name}}</h1>
                 <p>I hate this dept</p>
+<<<<<<< HEAD
+                <a href="{% url 'about' %}"><btn class="btn btn-danger">So I Delete It</btn></a>
+=======
                 <a href="{% url 'departments_delete' department.id %}"><btn>So I Delete It</btn></a>
+>>>>>>> main
 
                 <!-- Tasks Start -->
                     <table>
@@ -41,7 +45,11 @@
                                 <td> {{ task.name }} </td>
                                 <td> {{ task.due }} </td>
                                 <td> {{ task.description }} </td>
+<<<<<<< HEAD
+                                <td> {{ task.get_status_display }} </td>
+=======
                                 <td> {{ task.get_status_display}} </td>
+>>>>>>> main
                                 <td><a href="{% url 'tasks_delete' department.id task.id %}">Delete</a></td>
                             </tr>
                         {% endif %}
@@ -62,11 +70,35 @@
                 <h2>Create a Task</h2>
 
                 <form method="POST" action="{% url 'tasks_create' department.id %}">
-
-                {{ task_form.as_p }}
-                {% csrf_token %}
-
-                <input type="submit" value="Create Department" class="btn btn-primary">
+                    {% csrf_token %}
+                    <div>
+                        <input name="name" type="text" class="form-control">
+                    </div>
+                    <div>
+                        <input name="due" type="date" class="form-control">
+                    </div>
+                    <div>
+                        <input name="description" type="text" class="form-control">
+                    </div>
+                    <div>
+                        <select name="urgency" class="form-select" id="autoSizingSelect">
+                            <option selected>Choose...</option>
+                            <option value="LOW">Low Priority</option>
+                            <option value="MID">Mid Priority</option>
+                            <option value="HIGH">High Priority</option>
+                            <option value="EMERG">Emergency Priority</option>
+                          </select>
+                    </div>
+                    <div>
+                        <select name="status" class="form-select" id="autoSizingSelect">
+                            <option selected>Choose...</option>
+                            <option value="IP">In Progress</option>
+                            <option value="AS">Assigned</option>
+                            <option value="UAS">Unassigned</option>
+                            <option value="COM">Complete</option>
+                          </select>
+                    </div>
+                <input type="submit" value="Create Task" class="btn btn-primary">
                 </form>
             </div>
         </div>
