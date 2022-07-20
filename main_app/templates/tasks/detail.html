@@ -4,14 +4,15 @@
 
 <div class="container mt-4">
 
-    <div class="card">
+    <div class="card w-50 m-auto">
         <div class="card-header">
             <h5 class="card-title">Task: {{ task.name }}</h5>
-            <p class="card-text">Department: {{ task.department.name }}
-                <br>
-                Employees: 
+            <p class="card-text"><b>Department:</b> <a class="btn btn-sm btn-outline-dark" href="{% url 'departments_detail' task.department.id %}">{{ task.department.name }}</a>
+            </p>
+            <p class="card-text">
+                <b>Employees:</b>
                 {% for employee in task.employee_set.all %}
-                    {{ employee.user.first_name }} {{ employee.user.last_name }}, 
+                    <a class="btn btn-sm btn-outline-dark" href="{% url 'employees_detail' employee.id %}">{{ employee.user.first_name }} {{ employee.user.last_name }}</a>
                 {% empty %}
                     None Assigned
                 {% endfor %}
@@ -19,19 +20,28 @@
         </div> 
         <div class="card-body">
             <p>
-                Due Date: {{ task.due }} 
+                <b>Due Date:</b> {{ task.due }} 
                 <br>
-                Status: {{ task.get_status_display }}
+                <b>Status:</b> {{ task.get_status_display }}
                 <br>
-                Urgency: {{ task.get_urgency_display }} 
+                <b>Urgency:</b> {{ task.get_urgency_display }} 
                 <br>
-                Description: {{ task.description }}
+                <b>Description:</b> {{ task.description }}
             </p>
 
             <a class="btn btn-secondary" href="{% url 'tasks_update' task.id %}">Update Task</a>
             <a class="btn btn-danger" href="{% url 'tasks_delete' task.department_id task.id %}">Delete Task</a>
         </div>
     </div>
+
+    <div class="mt-4">
+
+        <h4>Assign Employees to Task</h4>
+        
+    </div>
+
 </div>
+
+
 
 {% endblock %}
