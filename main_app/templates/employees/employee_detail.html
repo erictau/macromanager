@@ -6,11 +6,23 @@
 {% for dept in departments.all %}
 <div> {{dept.name}}</div>
 {% endfor %}
-<form action="" method="post">
+
+
+<form action="{% url 'assoc_dept_employee' employee.id %}" method="post">
   {% csrf_token %}
   <div>
-    {{ form.as_p }}
-    </div
+    <select name="dept" class="form-select" id="autoSizingSelect">
+    	<option selected>Add new department</option>
+    		{% for dept in avldepts %}
+    		<option value="{{ dept.id }}">{{ dept.name }}</option>
+        {% endfor %}
+    		</select>
+      </div>
+      <input type="submit" value="Add Department" class="btn btn-primary">
+    </form>
+
+
+
 {% for task in tasks %}
 <a href= '{% url "tasks_detail" task.id %}'>
 <div class="card">
