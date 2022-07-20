@@ -156,10 +156,13 @@ class TaskDelete(LoginRequiredMixin, DeleteView):
 def employees_detail(request, employee_id):
     employee = Employee.objects.get(id=employee_id)
     tasks = employee.task.all()
+    departments = employee.dept.all()
+    avldepts = Department.objects.filter(org_id = employee.org_id)
+    print(avldepts)
     return render(
         request, 
         'employees/employee_detail.html', 
-        {'tasks': tasks, 'employee': employee})
+        {'tasks': tasks, 'employee': employee, 'departments': departments})
 
 @login_required
 def employees_index(request):

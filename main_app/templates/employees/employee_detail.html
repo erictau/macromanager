@@ -3,14 +3,17 @@
 
 <h2>These are your tasks {{ employee.user.first_name}} {{ employee.user.last_name }}.</h1>
 
-{% for dept in employee.user %}
+{% for dept in departments.all %}
+<div> {{dept.name}}</div>
+{% endfor %}
 {% for task in tasks %}
 <a href= '{% url "tasks_detail" task.id %}'>
 <div class="card">
   <div class="card-body">Task: {{ task.name }}</div>
   <div class="card-body">Task Urgency: {{ task.get_urgency_display}}</div>
   <div class="card-body">Due Date: {{ task.due }}</div>
-  <div class="card-body">Descrption: {{ task.description}}</div>
+  <div class="card-body">Descrption: {{ task.description }}</div>
+  <div class="card-body">Task Department: {{ task.department.name }}</div>
 </div>
 </a>
 {% endfor %}
