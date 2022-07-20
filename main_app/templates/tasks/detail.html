@@ -37,7 +37,19 @@
     <div class="mt-4">
 
         <h4>Assign Employees to Task</h4>
-        
+        <form action="{% url 'assoc_employee_task' %}" method="POST">
+            <label for="employees">Employees</label>
+            <select name="employee_id" id="employees">
+                {% for employee in task.department.employee.all %}
+                {% if employee in task.employee_set.all %}
+                
+                {% else %}
+                <option value="{{ employee.id }}">{{ employee.name }}</option>
+                {% endif %}
+                {% endfor %}
+            </select>
+            <input type="submit" value="Add">
+        </form>
     </div>
 
 </div>
