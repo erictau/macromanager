@@ -6,6 +6,11 @@
 {% for dept in departments.all %}
 <div> {{dept.name}}</div>
 {% endfor %}
+<form action="" method="post">
+  {% csrf_token %}
+  <div>
+    {{ form.as_p }}
+    </div
 {% for task in tasks %}
 <a href= '{% url "tasks_detail" task.id %}'>
 <div class="card">
