@@ -80,7 +80,7 @@ def departments_index(request):
     context = { 'depts': depts, 'dept_form': dept_form}
     return render(request, 'departments/department_form.html', context)
 
-@login_required
+
 def departments_create(request):
     form = DeptForm(request.POST)
     if form.is_valid():
@@ -99,6 +99,11 @@ def departments_detail(request, department_id):
     employees = list(Employee.objects.filter(dept = department_id))
     print(employees)
     return render(request, 'departments/department_detail.html', {'department':department, 'tasks': tasks, 'task_form': task_form, 'employees': employees })
+
+class DepartmentUpdate(LoginRequiredMixin, UpdateView):
+    model = Department
+    fields = ['name']
+    template_name = 'departments/department_update.html'
 
 class DepartmentDelete(LoginRequiredMixin, DeleteView):
 	model = Department
@@ -131,6 +136,13 @@ def tasks_create(request, department_id):
 class TaskDetail(LoginRequiredMixin, DetailView):
     model = Task
     template_name = 'tasks/detail.html'
+
+class TaskUpdate(LoginRequiredMixin, UpdateView):
+    model = Task
+    template_name = 'tasks/form.html'
+    fields = '__all__'
+    exclude = ('department_id')
+    # Creating the custom task form may make it slightly more difficult to use CBV's to update the task. 
     
 class TaskDelete(LoginRequiredMixin, DeleteView):
     model = Task
@@ -139,6 +151,7 @@ class TaskDelete(LoginRequiredMixin, DeleteView):
 
 ### Employees
 
+@login_required
 def employees_detail(request, employee_id):
     employee = Employee.objects.get(id=employee_id)
     tasks = employee.task.all()
@@ -146,3 +159,13 @@ def employees_detail(request, employee_id):
         request, 
         'employees/employee_detail.html', 
         {'tasks': tasks, 'employee': employee})
+
+@login_required
+def employees_index(request):
+    employees = Employee.objects.filter(org_id = request.user.employee.org_id)
+    return render(request, 'employees/employee_index.html',{'employees': employees})
+
+
+class EmployeeUpdate(LoginRequiredMixin, UpdateView):
+    model = Employee
+    feilds = ['dept', 'task']

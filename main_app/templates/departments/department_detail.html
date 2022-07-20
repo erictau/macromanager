@@ -13,7 +13,8 @@
             <div class="container-fluid">
                 <h1>{{department.name}}</h1>
                 <p>I hate this dept</p>
-                <a href="{% url 'departments_delete' department.id %}"><btn>So I Delete It</btn></a>
+                <a href="{% url 'departments_update' department.id %}"><button class="btn btn-secondary">Update Department</button></a>
+                <a href="{% url 'departments_delete' department.id %}"><btn class="btn btn-danger">Delete Department</btn></a>
 
                 <!-- Tasks Start -->
                     <table>
