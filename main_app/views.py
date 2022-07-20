@@ -1,3 +1,4 @@
+from telnetlib import STATUS
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from .forms import OrgForm, UserForm, DeptForm, TaskForm
@@ -98,7 +99,6 @@ def departments_detail(request, department_id):
     tasks = department.task_set.all()
     # employees = list(Employee.objects.filter(dept = department_id))
     employees = department.employee_set.all()
-    print(employees)
     return render(request, 'departments/department_detail.html', {'department':department, 'tasks': tasks, 'task_form': task_form, 'employees': employees })
 
 class DepartmentUpdate(LoginRequiredMixin, UpdateView):
@@ -114,10 +114,27 @@ class DepartmentDelete(LoginRequiredMixin, DeleteView):
 
 @login_required
 def tasks_create(request, department_id):
-    new_task = Task.objects.create(
-        name = request.POST.get('name'), due = request.POST.get('due'), description = request.POST.get('description'),
-        status = request.POST.get('status'), urgency = request.POST.get('urgency'), department_id = department_id
-     )
+    dat_form = TaskForm(request.POST)
+
+    if dat_form.is_valid():
+
+        clean_form = dat_form.cleaned_data
+        print(clean_form)
+
+        all_together_now = Task(
+            name = clean_form['name'],
+            due = clean_form['due'],
+            description = clean_form['name'],
+            status = clean_form['status'][0],
+            urgency = clean_form['urgency'][0],
+            department_id = department_id 
+        )
+        all_together_now.save()
+
+    # new_task = Task.objects.create(
+    #     name = request.POST.get('name'), due = request.POST.get('due'), description = request.POST.get('description'),
+    #     status = request.POST.get('status'), urgency = request.POST.get('urgency'), department_id = department_id
+    #  )
 
     # Eric: Icebox - Figure out how to validate the request.POST data before saving to DB.
     # new_task_dict = {}
@@ -141,8 +158,7 @@ class TaskDetail(LoginRequiredMixin, DetailView):
 class TaskUpdate(LoginRequiredMixin, UpdateView):
     model = Task
     template_name = 'tasks/form.html'
-    fields = '__all__'
-    exclude = ('department_id')
+    form_class = TaskForm
     # Creating the custom task form may make it slightly more difficult to use CBV's to update the task. 
     
 class TaskDelete(LoginRequiredMixin, DeleteView):
