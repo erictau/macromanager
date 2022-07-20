@@ -80,7 +80,7 @@ def departments_index(request):
     context = { 'depts': depts, 'dept_form': dept_form}
     return render(request, 'departments/department_form.html', context)
 
-@login_required
+
 def departments_create(request):
     form = DeptForm(request.POST)
     if form.is_valid():
@@ -138,6 +138,7 @@ class TaskDelete(LoginRequiredMixin, DeleteView):
 
 ### Employees
 
+@login_required
 def employees_detail(request, employee_id):
     employee = Employee.objects.get(id=employee_id)
     tasks = employee.task.all()
@@ -145,3 +146,13 @@ def employees_detail(request, employee_id):
         request, 
         'employees/employee_detail.html', 
         {'tasks': tasks, 'employee': employee})
+
+@login_required
+def employees_index(request):
+    employees = Employee.objects.filter(org_id = request.user.employee.org_id)
+    return render(request, 'employees/employee_index.html',{'employees': employees})
+
+
+class EmployeeUpdate(LoginRequiredMixin, UpdateView):
+    model = Employee
+    feilds = ['dept', 'task']
