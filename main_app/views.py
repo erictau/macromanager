@@ -159,8 +159,10 @@ def tasks_create(request, department_id):
 def tasks_detail(request, task_id):
     task = Task.objects.get(id = task_id)
     employee = Employee.objects.get(id = request.user.employee.id)
-    avlemp = Employee.objects.filter(org_id = employee.org.id)
-    return render(request, 'tasks/detail.html', {'employee':employee, 'task':task, 'avlemp':avlemp})
+    avlemp = Employee.objects.filter(org_id = employee.org.id).exclude(id__in=task.employee_set.all())
+    asgnemp = Employee.objects.filter(id__in=task.employee_set.all())
+    print(asgnemp)
+    return render(request, 'tasks/detail.html', {'employee':employee, 'task':task, 'avlemp':avlemp, 'asgnemp':asgnemp})
 
 class TaskUpdate(LoginRequiredMixin, UpdateView):
     model = Task
