@@ -41,7 +41,7 @@
         {% csrf_token %}
         <div>
           <select name="employee" class="form-select" id="autoSizingSelect">
-              <option selected>Add new employee</option>
+              <option selected>Add Employee</option>
                   {% for emp in avlemp %}
                   <option value="{{ emp.id }}">{{ emp.user.first_name }}</option>
               {% endfor %}
@@ -49,6 +49,20 @@
             </div>
             <input type="submit" value="Add Employee" class="btn btn-primary">
           </form>
+
+          <h4>Remove employee from this task</h4>
+          <form action="{% url 'remove_task_employee' task.id %}" method="POST">
+            {% csrf_token %}
+            <div>
+              <select name="employee" class="form-select" id="autoSizingSelect">
+                  <option selected>Remove Employee</option>
+                      {% for emp in avlemp %}
+                      <option value="{{ emp.id }}">{{ emp.user.first_name }}</option>
+                  {% endfor %}
+                      </select>
+                </div>
+                <input class="btn btn-danger" type="submit" value="Remove Employee" class="btn btn-primary">
+              </form>
 </div>
 
 

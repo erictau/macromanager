@@ -180,6 +180,12 @@ def assoc_task_employee(request, task_id):
     employee.task.add(task_id)
     return redirect('tasks_detail', task_id)
 
+def remove_task_employee(request, task_id):
+    task = Task.objects.get(id = task_id)
+    employee = Employee.objects.get(id = request.POST['employee'])
+    employee.task.remove(task_id)
+    return redirect('tasks_detail', task_id)
+
 
 ### Employees
 
