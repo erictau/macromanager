@@ -137,7 +137,7 @@ def tasks_detail(request, task_id):
     avlemp = Employee.objects.filter(org_id = employee.org.id).exclude(id__in=task.employee_set.all())
     asgnemp = Employee.objects.filter(id__in=task.employee_set.all())
     print(asgnemp)
-    return render(request, 'tasks/detail.html', {'employee':employee, 'task':task, 'avlemp':avlemp, 'asgnemp':asgnemp})
+    return render(request, 'tasks/task_detail.html', {'employee':employee, 'task':task, 'avlemp':avlemp, 'asgnemp':asgnemp})
 
 def tasks_update(request, task_id):
 
@@ -166,7 +166,7 @@ def tasks_update(request, task_id):
         return redirect('tasks_detail', task_id)
 
 
-    return render(request, "tasks/form.html", {'task_form': form, 'task' : task})
+    return render(request, "tasks/task_form.html", {'task_form': form, 'task' : task})
 
     
 class TaskDelete(LoginRequiredMixin, DeleteView):
