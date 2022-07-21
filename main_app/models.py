@@ -16,13 +16,7 @@ TASKSTATUS = (
     ('UAS', 'Unassigned'), 
     ('COM', 'Complete'), 
 )
-EMPROLES = (
-    ('OWN', 'Owner'), 
-    ('MGR', 'Manager'), 
-    ('MBR', 'Staff Member')
-)
 
-# Create your models here,
 class Organization(models.Model):
     name = models.CharField(max_length=30, unique=True)
 
@@ -55,17 +49,13 @@ class Task(models.Model):
     )
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
 
-    # def __str__(self):
-    #     return self.name
+    def __str__(self):
+        return self.name
 
     class Meta:
         ordering = ['-due']
 
 class Employee(models.Model):
-    # role = models.CharField(
-    #     max_lenght=3, 
-    #     choices=EMPROLES,
-    #     default=EMPROLES[0][0])
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     dept = models.ManyToManyField(Department)
     org = models.ForeignKey(Organization, on_delete=models.CASCADE)
@@ -73,4 +63,3 @@ class Employee(models.Model):
 
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name}"
-
