@@ -22,5 +22,6 @@ urlpatterns = [
     path('employees/<int:employee_id>/assoc_dept_employee/', views.assoc_dept_employee, name='assoc_dept_employee'),
     path('tasks/<int:pk>/update/', views.TaskUpdate.as_view(), name='tasks_update'),
     path('departments/<int:department_id>/tasks/<int:pk>/delete/', views.TaskDelete.as_view(), name='tasks_delete'),
-    path('tasks/<int:task_id>/assoc_task_employee/', views.assoc_task_employee, name='assoc_task_employee')
+    path('tasks/<int:task_id>/assoc_task_employee/', views.assoc_task_employee, name='assoc_task_employee'), 
+    path('tasks/<int:task_id>/remove_task_employee/', views.remove_task_employee, name='remove_task_employee')
 ]
