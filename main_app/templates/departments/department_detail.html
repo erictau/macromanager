@@ -2,94 +2,84 @@
 {% block content %}
 
 
-<div class="container">
+<div class="container mt-4">
     <div class="row">
-        <div class="col">
-            <div>
-                <h3>open area</h3>
+        <div class="col-6">
+            <h1>Department: {{department.name}}</h1>
+            <a href="{% url 'departments_update' department.id %}"><button class="btn btn-sm btn-outline-dark">Update Department</button></a>
+            <a href="{% url 'departments_delete' department.id %}"><btn class="btn btn-sm btn-danger">Delete Department</btn></a>
+        </div>
+
+        <div class="col-6">
+            <h3 class="text-center">Employees</h3>
+            <div class="text-center">
+            {% for employee in employees|dictsort:"user.first_name" %}
+                <a href="{% url 'employees_detail' employee.id %}" class="btn btn-sm btn-outline-dark">{{ employee.user.first_name|capfirst }} {{ employee.user.last_name|capfirst }}</a>
+            {% endfor %}
             </div>
         </div>
+    </div>
+
+    <div class="row mt-5">
         <div class="col-6">
-            <div class="container-fluid">
-                <h1>{{department.name}}</h1>
-                <a href="{% url 'departments_update' department.id %}"><button class="btn btn-sm btn-outline-dark">Update Department</button></a>
-                <a href="{% url 'departments_delete' department.id %}"><btn class="btn btn-sm btn-danger">Delete Department</btn></a>
-
-                <!-- Tasks Start -->
-                    <table>
-                    {% for task in tasks %}
-                        {% if task.urgency == 'LOW' %}
-                            <tr>
-                                <td> {{ task.name }} </td>
-                                <td> {{ task.due }} </td>
-                                <td> {{ task.employee.user.first_name }} </td>
-                                <td> {{ task.get_urgency_display }} </td>
-                                <td> {{ task.description }} </td>
-                                <td> {{ task.get_status_display }} </td>
-                                <td><a href="{% url 'tasks_delete' department.id task.id %}">Delete</a></td>
-                                <td><a href="{% url 'tasks_detail' task.id %}">Task Info</a></td>
-                            </tr>
-                        {% endif %}
-                        {% if task.urgency == 'MID' %}
-                            <tr class="table-primary">
-                                <td> {{ task.name }} </td>
-                                <td> {{ task.due }} </td>
-                                <td> {{ task.employee.user.first_name }} </td>
-                                <td> {{ task.get_urgency_display }} </td>
-                                <td> {{ task.description }} </td>
-                                <td> {{ task.get_status_display }} </td>
-                                <td><a href="{% url 'tasks_delete' department.id task.id %}">Delete</a></td>
-                                <td><a href="{% url 'tasks_detail' task.id %}">Task Info</a></td>
-                            </tr>
-                        {% endif %}
-                        {% if task.urgency == 'HIGH' %}
-                                <td> {{ task.name }} </td>
-                                <td> {{ task.due }} </td>
-                                <td> {{ task.employee.user.first_name }} </td>
-                                <td> {{ task.get_urgency_display }} </td>
-                                <td> {{ task.description }} </td>
-                                <td> {{ task.get_status_display}} </td>
-                                <td><a href="{% url 'tasks_delete' department.id task.id %}">Delete</a></td>
-                                <td><a href="{% url 'tasks_detail' task.id %}">Task Info</a></td>
-                            </tr>
-                        {% endif %}
-                        {% if task.urgency == 'EMERG' %}
-                            <tr class="table-danger">
-                                <td> {{ task.name }} </td>
-                                <td> {{ task.due }} </td>
-                                <td> {{ task.employee.user.first_name }} </td>
-                                <td> {{ task.get_urgency_display }} </td>
-                                <td> {{ task.description }} </td>
-                                <td> {{ task.get_status_display }} </td>
-                                <td><a href="{% url 'tasks_delete' department.id task.id %}">Delete</a></td>
-                                <td><a href="{% url 'tasks_detail' task.id %}">Task Info</a></td>
-                            </tr>
-                        {% endif %}
-                        {% empty %}
-                            <h2>Take the day off</h2>
-                    {% endfor %}
-                    </table>
-
-                <h2>Create a Task</h2>
+            <div>
+                <h3 class="text-center">Create a Task</h3>
 
                 <form method="POST" action="{% url 'tasks_create' department.id %}">
                     {% csrf_token %}
-                    {{ task_form.as_p }}
+                    <table class="table table-sm">
+                        {{ task_form.as_table }}
+                    </table>
                 <input type="submit" value="Create Task" class="btn btn-sm btn-primary">
                 </form>
             </div>
         </div>
-        <div class="col">
+        <div class="col-6">
             <div>
-                <h3>Employees</h3>
-                <table>
-                {% for employee in employees %}
-                    <tr>
-                        <td>{{ employee.user.first_name }} {{ employee.user.last_name }}</td>
-                    </tr>
+                <!-- Tasks Start -->
+                <h3 class="text-center">Department Tasks</h3>
+                <table class="table table-sm">
+                    <thead>
+                        <th>Task</th>
+                        <th>Due Date</th>
+                        <th>Assigned Employees</th>
+                        <th>Urgency</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Details</th>
+                        <th>Delete</th>
+                    </thead>
+                    <tbody>
+                {% for task in tasks %}
+                    {% if task.status == 'COM' %}
+                        <tr class="table-active">
+                    {% elif task.urgency == 'HIGH' %}
+                        <tr class="table-warning">
+                    {% elif task.urgency == 'EMERG' %}
+                        <tr class="table-danger">
+                    {% else %}
+                        <tr>
+                    {% endif %}
+                            <td> {{ task.name }} </td>
+                            <td> {{ task.due }} </td>
+                            <td>
+                                {% for employee in task.employee_set.all %}
+                                {{ employee.user.first_name|capfirst }} {{ employee.user.last_name|capfirst }} 
+                                {% endfor%} 
+                            </td>        
+                            <td> {{ task.get_urgency_display }} </td>
+                            <td> {{ task.description }} </td>
+                            <td> {{ task.get_status_display }} </td>
+                            <td><a href="{% url 'tasks_detail' task.id %}" >Task Info</a></td>
+                            <td><a href="{% url 'tasks_delete' department.id task.id %}" class="btn btn-sm btn-danger">X</a></td>
+                        </tr>
+
                 {% endfor %}
+                    </tbody>
                 </table>
             </div>
+
+
         </div>
     </div>
 
