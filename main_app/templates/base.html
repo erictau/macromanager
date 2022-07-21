@@ -18,7 +18,11 @@
             <div class="container-fluid">
                 <a class="navbar-brand" href="{% url 'home' %}">
                     <img src="/static/images/logo.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
+                    {% if request.user.employee %}
+                    {{ request.user.employee.org.name }}
+                    {% else %}
                     MACRO MANAGER
+                    {% endif %}
                   </a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -30,7 +34,11 @@
                   </li>
                   {% if user.is_authenticated %}
                   <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'departments_index' %}">Departments Index</a>
+                    <a class="nav-link active" aria-current="page" href="{% url 'departments_index' %}">All Departments</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'employees_index' %}">All Employees</a>
+                  </li>
                     {% if request.user.employee %}
                   <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{% url 'employees_detail' request.user.employee.id %}">My Tasks</a>

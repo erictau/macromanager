@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+<br>
+<br>
 <div class="container">
   <div class="row">
       <div class="col">
@@ -9,8 +10,10 @@
               
           </div>
       </div>
-      <div class="col-6">
-          <div class="container-fluid">
+
+      <div class="col-8">
+          <div class="h5 container-fluid text-center">
+            <h2 class="text-muted">Departments in {{ request.user.employee.org }}</h2>
             {% csrf_token %}
             {% for dept in depts %}
             
@@ -23,13 +26,15 @@
                 </a>
             
             {% endfor %}
-            <h2>Create a Dept</h2>
+            <br>
+            <br>
+            <h2 class="text-muted">Create a Dept</h2>
 
             <form method="POST" action="{% url 'departments_create' %}">
 
               {{ dept_form.as_p }}
               {% csrf_token %}
-              <input type="submit" value="Create Department" class="btn btn-primary">
+              <input type="submit" value="Create Department" class="btn btn-sm btn-primary">
             </form>
           </div>
       </div>

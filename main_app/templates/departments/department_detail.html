@@ -2,19 +2,18 @@
 {% block content %}
 
 
-<div class="container">
+<div class="container text-center">
     <div class="row">
         <div class="col">
             <div>
                 <h3>open area</h3>
             </div>
         </div>
-        <div class="col-6">
+        <div class="col-8">
             <div class="container-fluid">
                 <h1>{{department.name}}</h1>
-                <p>I hate this dept</p>
-                <a href="{% url 'departments_update' department.id %}"><button class="btn btn-secondary">Update Department</button></a>
-                <a href="{% url 'departments_delete' department.id %}"><btn class="btn btn-danger">Delete Department</btn></a>
+                <a href="{% url 'departments_update' department.id %}"><button class="btn btn-sm btn-outline-dark">Update Department</button></a>
+                <a href="{% url 'departments_delete' department.id %}"><btn class="btn btn-sm btn-danger">Delete Department</btn></a>
 
                 <!-- Tasks Start -->
                     <table>
@@ -67,17 +66,19 @@
                             </tr>
                         {% endif %}
                         {% empty %}
-                            <h2>Take the day off</h2>
+                            <h2>{{ department.name }} has no tasks</h2>
                     {% endfor %}
                     </table>
 
                 <h2>Create a Task</h2>
-
+                <table>
                 <form method="POST" action="{% url 'tasks_create' department.id %}">
                     {% csrf_token %}
                     {{ task_form.as_p }}
-                <input type="submit" value="Create Task" class="btn btn-primary">
+                <input type="submit" value="Create Task" class="btn btn-sm btn-primary">
                 </form>
+
+            </table>
             </div>
         </div>
         <div class="col">
