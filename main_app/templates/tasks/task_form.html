@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container">
-
+<div class="container mt-4 w-50 m-auto">
+    <h4 class="text-center">Update Task: {{ task.name }}</h4>
     <form method="POST" action="{% url 'tasks_update' task.id %}">
         {% csrf_token %}
-        {{ task_form.as_p }}
+        <table class="table">
+            {{ task_form.as_table }}
+        </table>
     <input type="submit" value="Update Task" class="btn btn-sm btn-outline-dark">
     </form>
 </div>
