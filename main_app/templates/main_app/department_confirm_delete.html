@@ -1,13 +1,15 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 
-  <h1>Delete Department</h1>
+<h1>Delete Department</h1>
 
-  <h4>Are you sure you want to delete <span class="<!╌ ADD BOOTSTRAP CLASS ╌> ">{{ object.name }}</span>?</h4>
-  <form action="" method="POST">
-    {% csrf_token %}
-    <input type="submit" value="Yes - Delete!" class="btn btn-danger">
-    <a href="{% url 'departments_detail' department.id %}">Cancel</a>
-  </form>
+<h4>
+  Are you sure you want to delete
+  <span class="<!╌ ADD BOOTSTRAP CLASS ╌>">{{ object.name }}</span>?
+</h4>
+<form action="" method="POST">
+  {% csrf_token %}
+  <input type="submit" value="Yes - Delete!" class="btn btn-danger" />
+  <a href="{% url 'departments_detail' department.id %}">Cancel</a>
+</form>
 
 {% endblock %}
