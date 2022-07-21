@@ -1,12 +1,13 @@
 from telnetlib import STATUS
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-from .forms import OrgForm, UserForm, DeptForm, TaskForm, EmployeeForm
+from .forms import OrgForm, UserForm, DeptForm, TaskForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
+from datetime import *
 
 
 from .models import Department, Organization, Task, Employee
@@ -155,11 +156,40 @@ class TaskDetail(LoginRequiredMixin, DetailView):
     model = Task
     template_name = 'tasks/detail.html'
 
-class TaskUpdate(LoginRequiredMixin, UpdateView):
-    model = Task
-    template_name = 'tasks/form.html'
-    form_class = TaskForm
-    # Creating the custom task form may make it slightly more difficult to use CBV's to update the task. 
+def tasks_update(request, task_id):
+
+    task = get_object_or_404(Task, id = task_id)
+
+    form = TaskForm(request.POST or None)
+    
+
+    if form.is_valid():
+        
+        clean_form = form.cleaned_data
+        print(task)
+        clean_form['due'] = clean_form['due'].strftime('%Y-%m-%d')
+        
+        
+
+        task.name = clean_form['name'],
+        task.due = clean_form['due'],
+        task.description = clean_form['name'],
+        task.status = clean_form['status'][0],
+        task.urgency = clean_form['urgency'][0]
+        
+        print(task)
+        task.save(update_fields=['name', 'due', 'description', 'status', 'urgency'])
+        
+        return redirect('tasks_detail', task_id)
+
+
+    return render(request, "tasks/form.html", {'task_form': form, 'task' : task})
+
+# class TaskUpdate(LoginRequiredMixin, UpdateView):
+#     model = Task
+#     template_name = 'tasks/form.html'
+#     form_class = TaskForm
+#     # Creating the custom task form may make it slightly more difficult to use CBV's to update the task. 
     
 class TaskDelete(LoginRequiredMixin, DeleteView):
     model = Task

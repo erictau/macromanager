@@ -20,6 +20,6 @@ urlpatterns = [
     path('employees/<int:employee_id>/', views.employees_detail, name='employees_detail'), 
     path('employees/', views.employees_index, name='employees_index'), 
     path('employees/<int:employee_id>/assoc_dept_employee/', views.assoc_dept_employee, name='assoc_dept_employee'),
-    path('tasks/<int:pk>/update/', views.TaskUpdate.as_view(), name='tasks_update'),
+    path('tasks/<int:task_id>/update/', views.tasks_update, name='tasks_update'),
     path('departments/<int:department_id>/tasks/<int:pk>/delete/', views.TaskDelete.as_view(), name='tasks_delete'),
 ]
