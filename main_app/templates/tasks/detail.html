@@ -37,10 +37,11 @@
     <div class="mt-4">
 
         <h4>Assign Employees to Task</h4>
+        {{ task.department.org }}
         <form action="{% url 'assoc_employee_task' %}" method="POST">
             <label for="employees">Employees</label>
             <select name="employee_id" id="employees">
-                {% for employee in task.department.employee.all %}
+                {% for employee in task.department_id.employee.all %}
                 {% if employee in task.employee_set.all %}
                 
                 {% else %}

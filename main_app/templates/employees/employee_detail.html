@@ -1,37 +1,71 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 {% block content %}
 
-<h2>These are your tasks {{ employee.user.first_name}} {{ employee.user.last_name }}.</h1>
+<div class="container mt-4 m-auto">
+  <h2>
+    {% if request.user == employee.user %}
+    Here are your tasks, {{ employee.user.first_name|capfirst }}.
+    {% else %}
+    {{ employee.user.first_name|capfirst }} {{ employee.user.last_name|capfirst }} Details
+    {% endif %}
+  </h2>
 
-{% for dept in departments.all %}
-<div> {{dept.name}}</div>
-{% endfor %}
+  <h2>Departments</h2>
+  {% for dept in departments.all %}
+  <a class="btn btn-sm btn-outline-dark" href="{% url 'departments_detail' dept.id %}">{{ dept.name }}</a>
+  {% endfor %}
 
-
-<form action="{% url 'assoc_dept_employee' employee.id %}" method="post">
-  {% csrf_token %}
-  <div>
-    <select name="dept" class="form-select" id="autoSizingSelect">
-    	<option selected>Add new department</option>
-    		{% for dept in avldepts %}
-    		<option value="{{ dept.id }}">{{ dept.name }}</option>
+  {% if avldepts.count %}
+  <form action="{% url 'assoc_dept_employee' employee.id %}" method="post">
+    {% csrf_token %}
+    <div class="pb-2 pt-2">
+      <select name="dept" class="form-select" id="autoSizingSelect">
+        {% for dept in avldepts %}
+        <option value="{{ dept.id }}">{{ dept.name }}</option>
         {% endfor %}
-    		</select>
-      </div>
-      <input type="submit" value="Add Department" class="btn btn-primary">
-    </form>
+      </select>
+    </div>
+    <input type="submit" value="Add Department" class="btn btn-primary">
+  </form>
+  {% else %}
+  <p>{{ employee.user.first_name|capfirst }} is included in all departments.</p>
+  {% endif %}
 
+  <div class="mt-4">
+    <h2>Tasks</h2>
+    <div class="card p-3">
+    <table class="table table-striped">
+      <thead>
+        <th>Task</th>
+        <th>Status</th>
+        <th>Urgency</th>
+        <th>Due Date</th>
+        <th>Description</th>
+        <th>Department</th>
+        <th>Link</th>
+      </thead>
+      <tbody>
+        {% for task in tasks %}
+        <tr
+          {% if task.status == 'COM'%}
+          style="background: gray"
+          {% elif task.urgency == 'EMERG' %}
+          style="background: red"
+          {% endif %}
+        >
+          <td>{{ task.name }}</td>
+          <td>{{ task.get_status_display }}</td>
+          <td>{{ task.get_urgency_display }}</td>
+          <td>{{ task.due }}</td>
+          <td>{{ task.description }}</td>
+          <td><a class="btn btn-outline-dark btn-sm" href='{% url "departments_detail" task.department.id %}'>{{ task.department.name }}</a></td>
+          <td><a class="btn btn-outline-dark btn-sm" href='{% url "tasks_detail" task.id %}'>Details</a></td>
+        </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-
-{% for task in tasks %}
-<a href= '{% url "tasks_detail" task.id %}'>
-<div class="card">
-  <div class="card-body">Task: {{ task.name }}</div>
-  <div class="card-body">Task Urgency: {{ task.get_urgency_display}}</div>
-  <div class="card-body">Due Date: {{ task.due }}</div>
-  <div class="card-body">Descrption: {{ task.description }}</div>
-  <div class="card-body">Task Department: {{ task.department.name }}</div>
 </div>
-</a>
-{% endfor %}
 {% endblock %}

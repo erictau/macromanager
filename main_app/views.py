@@ -1,7 +1,7 @@
 from telnetlib import STATUS
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-from .forms import OrgForm, UserForm, DeptForm, TaskForm, EmployeeForm
+from .forms import OrgForm, UserForm, DeptForm, TaskForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
