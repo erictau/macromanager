@@ -151,9 +151,16 @@ def tasks_create(request, department_id):
     #     task_form.save()
     return redirect('departments_detail', department_id = department_id)
 
-class TaskDetail(LoginRequiredMixin, DetailView):
-    model = Task
-    template_name = 'tasks/detail.html'
+# class TaskDetail(LoginRequiredMixin, DetailView):
+#     model = Task
+#     template_name = 'tasks/detail.html'
+
+@login_required
+def tasks_detail(request, task_id):
+    task = Task.objects.get(id = task_id)
+    employee = Employee.objects.get(id = request.user.employee.id)
+    avlemp = Employee.objects.filter(org_id = employee.org.id)
+    return render(request, 'tasks/detail.html', {'employee':employee, 'task':task, 'avlemp':avlemp})
 
 class TaskUpdate(LoginRequiredMixin, UpdateView):
     model = Task
@@ -166,8 +173,13 @@ class TaskDelete(LoginRequiredMixin, DeleteView):
     def get_success_url(self, **kwargs):
         return reverse('departments_detail', args=[self.kwargs['department_id']])
 
-def assoc_employee_task(request):
-    pass
+@login_required
+def assoc_task_employee(request, task_id):
+    task = Task.objects.get(id = task_id)
+    employee = Employee.objects.get(id = request.POST['employee'])
+    employee.task.add(task_id)
+    return redirect('tasks_detail', task_id)
+
 
 ### Employees
 
@@ -188,16 +200,9 @@ def employees_index(request):
     employees = Employee.objects.filter(org_id = request.user.employee.org_id)
     return render(request, 'employees/employee_index.html',{'employees': employees})
 
-
-# class EmployeeUpdate(LoginRequiredMixin, UpdateView):
-#     model = Employee
-#     feilds = ['dept', 'task']
-
-@login_required
+# @login_required
 def assoc_dept_employee(request, employee_id): 
     employee = Employee.objects.get(id = employee_id)
-    # form = EmployeeForm(request.POST)
-    print(request.POST['dept'])
     employee.dept.add(request.POST['dept'])
     return redirect('employees_detail', employee_id)
 
