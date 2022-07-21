@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div>
+<div class="container m-auto text-center mt-4">
+    <h4>Update Department: {{department.name}}</h4>
     <form action="" method="POST">
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" value="Update">
+        <input type="submit" class="btn btn-sm btn-outline-dark" value="Update">
     </form>
 </div>
 
