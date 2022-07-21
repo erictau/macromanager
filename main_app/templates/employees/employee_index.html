@@ -1,19 +1,40 @@
-{% extends 'base.html' %} 
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 
-<h1>This is the employee index page</h1>
-{% for employee in employees %}
-<div class="card">
-  <div class="card-body">Name: {{ employee.user.first_name }} {{ employee.user.last_name}}</div>
-  <div class="card-body">Department: {{ employee.department }}</div>
-  <div class="card-body">Assigned Tasks: 
-    {% for task in employee.task.all %}
-    <div>Task Name: {{ task.name }}</div>
-    <div>Task Due: {{ task.due }}</div>
-    <div>Task Status: {{ task.get_status_display }}</div>
-    <div>Task Urgency: {{ task.get_urgency_display }}</div>
-    {% endfor%}
-    
+<div class="container mt-4">
+  <h1>{{ request.user.employee.org }}'s Employees</h1>
+  <br>
+  {% for employee in employees %}
+  <div class="card mb-4">
+    <div class="card-body">
+      Name: {{ employee.user.first_name }} {{ employee.user.last_name}}
+    </div>
+    <div class="card-body">
+      Departments: <br />
+      {% for dept in employee.dept.all %}
+      <div class="col-2">{{ dept.name }}</div>
+      {% endfor %}
+      <p>Assigned Task:</p>
+    </div>
+    {% for task in employee.task.all %} 
+<a class="text-decoration-none" href="{% url 'tasks_detail' task.id %}">
+    {% if task.status == 'COM' %}
+    <div class="card-body bg-active">
+      {% elif task.urgency == 'HIGH' %}
+      <div class="card-body bg-warning">
+        {% elif task.urgency == 'EMERG' %}
+        <div class="card-body bg-danger">
+          {% else %}
+          <div class="card-body bg-light">
+            {% endif %}
+            <p>
+              Task Name: {{ task.name }} | Due: {{ task.due }} | Status: {{ task.get_status_display }} | Urgency: {{ task.get_urgency_display }}
+            </p>
+          </div>
+        </a>
+          {% endfor%}
+        </div>
+        {% endfor %} {% endblock %}
+      </div>
+    </div>
+  </div>
 </div>
-{% endfor %}
-{% endblock %}
