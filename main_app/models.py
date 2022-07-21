@@ -71,6 +71,6 @@ class Employee(models.Model):
     org = models.ForeignKey(Organization, on_delete=models.CASCADE)
     task = models.ManyToManyField(Task)
 
-    # def __str__(self):
-    #     return self.user_id.first_name
+    def __str__(self):
+        return f"{self.user.first_name} {self.user.last_name}"
 
