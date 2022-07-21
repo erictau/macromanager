@@ -178,13 +178,13 @@ def tasks_update(request, task_id):
         
         
 
-        task.name = clean_form['name'],
-        task.due = clean_form['due'],
-        task.description = clean_form['name'],
-        task.status = clean_form['status'][0],
+        task.name = clean_form['name']
+        task.due = clean_form['due']
+        task.description = clean_form['description']
+        task.status = clean_form['status'][0]
         task.urgency = clean_form['urgency'][0]
         
-        print(task)
+        print(task.due)
         task.save(update_fields=['name', 'due', 'description', 'status', 'urgency'])
         
         return redirect('tasks_detail', task_id)
