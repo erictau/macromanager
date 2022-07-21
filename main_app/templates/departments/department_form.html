@@ -9,8 +9,8 @@
               
           </div>
       </div>
-      <div class="col-6">
-          <div class="container-fluid">
+      <div class="col-8">
+          <div class="container-fluid text-center">
             {% csrf_token %}
             {% for dept in depts %}
             
@@ -23,7 +23,7 @@
                 </a>
             
             {% endfor %}
-            <h2>Create a Dept</h2>
+            <h2 class="text-muted">Create a Dept</h2>
 
             <form method="POST" action="{% url 'departments_create' %}">
 
