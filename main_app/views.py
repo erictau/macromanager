@@ -13,7 +13,6 @@ from datetime import *
 from .models import Department, Organization, Task, Employee
 
 
-# Create your views here.
 def home(request):
     return render(request, 'home.html')
 
@@ -28,18 +27,14 @@ def signup(request):
         return redirect('home')
     error_message = ''
     if request.method == 'POST':
-        # This is how to create a 'user' form object
-        # that includes the data from the browser
         form = UserForm(request.POST)
         if form.is_valid():
-            # This will add the user to the database
+    
             user = form.save()
-            # This is how we log a user in via code
             login(request, user)
             return redirect('organizations_new')
         else:
             error_message = 'Invalid sign up - try again'
-    # A bad POST or a GET request, so render signup.html with an empty form
     form = UserForm()
     context = {'form': form, 'error_message': error_message}
     return render(request, 'registration/signup.html', context)
@@ -98,7 +93,6 @@ def departments_detail(request, department_id):
         return redirect('departments_index')
     task_form = TaskForm()
     tasks = department.task_set.all()
-    # employees = list(Employee.objects.filter(dept = department_id))
     employees = department.employee_set.all()
     return render(request, 'departments/department_detail.html', {'department':department, 'tasks': tasks, 'task_form': task_form, 'employees': employees })
 
@@ -132,29 +126,9 @@ def tasks_create(request, department_id):
         )
         all_together_now.save()
 
-    # new_task = Task.objects.create(
-    #     name = request.POST.get('name'), due = request.POST.get('due'), description = request.POST.get('description'),
-    #     status = request.POST.get('status'), urgency = request.POST.get('urgency'), department_id = department_id
-    #  )
 
-    # Eric: Icebox - Figure out how to validate the request.POST data before saving to DB.
-    # new_task_dict = {}
-    # for prop in request.POST:
-    #     new_task_dict[prop] = request.POST[prop]
-    # # new_task_dict['department_id'] = department_id
-    # print(new_task_dict)
-    # request.POST.department_id = department_id
-    # task_form = TaskForm(new_task_dict)
-    # print(task_form.instance)
-    # if task_form.is_valid():
-    #     task_form.save(commit=False)
-    #     task_form.department_id = department_id
-    #     task_form.save()
     return redirect('departments_detail', department_id = department_id)
 
-# class TaskDetail(LoginRequiredMixin, DetailView):
-#     model = Task
-#     template_name = 'tasks/detail.html'
 
 @login_required
 def tasks_detail(request, task_id):
@@ -194,11 +168,6 @@ def tasks_update(request, task_id):
 
     return render(request, "tasks/task_form.html", {'task_form': form, 'task' : task})
 
-# class TaskUpdate(LoginRequiredMixin, UpdateView):
-#     model = Task
-#     template_name = 'tasks/form.html'
-#     form_class = TaskForm
-#     # Creating the custom task form may make it slightly more difficult to use CBV's to update the task. 
     
 class TaskDelete(LoginRequiredMixin, DeleteView):
     model = Task
@@ -238,7 +207,7 @@ def employees_index(request):
     employees = Employee.objects.filter(org_id = request.user.employee.org_id)
     return render(request, 'employees/employee_index.html',{'employees': employees})
 
-# @login_required
+@login_required
 def assoc_dept_employee(request, employee_id): 
     employee = Employee.objects.get(id = employee_id)
     employee.dept.add(request.POST['dept'])
