@@ -8,17 +8,48 @@
     <div class="row">
         <div class="col">
             <div>
-                left col
+                <a class="weatherwidget-io" href="https://forecast7.com/en/34d05n118d24/los-angeles/" data-label_1="LOS ANGELES" data-label_2="WEATHER" data-theme="original" >LOS ANGELES WEATHER</a>
+                <script>
+                !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+                </script>
             </div>
         </div>
         <div class="col-6">
             <div class="container-fluid">
-                <h1>MACROMANAGER</h1>
-            </div>
-        </div>
-        <div class="col">
-            <div>
-                right col
+                <h1>Get to work {{ request.user.first_name }}</h1>
+                <br>
+                <!-- TradingView Widget BEGIN -->
+                <div class='card'>
+<div class="tradingview-widget-container">
+    <div id="tradingview_2e362"></div>
+    <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/symbols/NASDAQ-TSLA/" rel="noopener" target="_blank"><span class="blue-text">TSLA Chart</span></a> by TradingView</div>
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    <script type="text/javascript">
+    new TradingView.widget(
+    {
+    "autosize": false,
+    "symbol": "NASDAQ:TSLA",
+    "interval": "60",
+    "timezone": "Etc/UTC",
+    "theme": "dark",
+    "style": "1",
+    "locale": "en",
+    "toolbar_bg": "#f1f3f6",
+    "enable_publishing": false,
+    "hide_top_toolbar": true,
+    "allow_symbol_change": true,
+    "save_image": false,
+    "container_id": "tradingview_2e362"
+  }
+    );
+    </script>
+  </div>
+</div>
+  <!-- TradingView Widget END -->
+</div>
+</div>
+<div class="col">
+    <div>
             </div>
         </div>
     </div>
