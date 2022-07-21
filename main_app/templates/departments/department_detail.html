@@ -28,6 +28,7 @@
                                 <td> {{ task.description }} </td>
                                 <td> {{ task.get_status_display }} </td>
                                 <td><a href="{% url 'tasks_delete' department.id task.id %}">Delete</a></td>
+                                <td><a href="{% url 'tasks_detail' task.id %}">Task Info</a></td>
                             </tr>
                         {% endif %}
                         {% if task.urgency == 'MID' %}
@@ -39,10 +40,10 @@
                                 <td> {{ task.description }} </td>
                                 <td> {{ task.get_status_display }} </td>
                                 <td><a href="{% url 'tasks_delete' department.id task.id %}">Delete</a></td>
+                                <td><a href="{% url 'tasks_detail' task.id %}">Task Info</a></td>
                             </tr>
                         {% endif %}
                         {% if task.urgency == 'HIGH' %}
-                            <tr class="table-warning">
                                 <td> {{ task.name }} </td>
                                 <td> {{ task.due }} </td>
                                 <td> {{ task.employee.user.first_name }} </td>
@@ -50,6 +51,7 @@
                                 <td> {{ task.description }} </td>
                                 <td> {{ task.get_status_display}} </td>
                                 <td><a href="{% url 'tasks_delete' department.id task.id %}">Delete</a></td>
+                                <td><a href="{% url 'tasks_detail' task.id %}">Task Info</a></td>
                             </tr>
                         {% endif %}
                         {% if task.urgency == 'EMERG' %}
@@ -61,6 +63,7 @@
                                 <td> {{ task.description }} </td>
                                 <td> {{ task.get_status_display }} </td>
                                 <td><a href="{% url 'tasks_delete' department.id task.id %}">Delete</a></td>
+                                <td><a href="{% url 'tasks_detail' task.id %}">Task Info</a></td>
                             </tr>
                         {% endif %}
                         {% empty %}
@@ -72,33 +75,7 @@
 
                 <form method="POST" action="{% url 'tasks_create' department.id %}">
                     {% csrf_token %}
-                    <div>
-                        <input name="name" type="text" class="form-control">
-                    </div>
-                    <div>
-                        <input name="due" type="date" class="form-control">
-                    </div>
-                    <div>
-                        <input name="description" type="text" class="form-control">
-                    </div>
-                    <div>
-                        <select name="urgency" class="form-select" id="autoSizingSelect">
-                            <option selected>Choose...</option>
-                            <option value="LOW">Low Priority</option>
-                            <option value="MID">Mid Priority</option>
-                            <option value="HIGH">High Priority</option>
-                            <option value="EMERG">Emergency Priority</option>
-                          </select>
-                    </div>
-                    <div>
-                        <select name="status" class="form-select" id="autoSizingSelect">
-                            <option selected>Choose...</option>
-                            <option value="IP">In Progress</option>
-                            <option value="AS">Assigned</option>
-                            <option value="UAS">Unassigned</option>
-                            <option value="COM">Complete</option>
-                          </select>
-                    </div>
+                    {{ task_form.as_p }}
                 <input type="submit" value="Create Task" class="btn btn-primary">
                 </form>
             </div>

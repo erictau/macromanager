@@ -5,6 +5,19 @@ from django.contrib.auth.forms import UserCreationForm
 
 from main_app.models import Organization, Department, Task, Employee
 
+TASKURGENCY = (
+    ('LOW', 'Low Priority'), 
+    ('MID', 'Medium Priority'), 
+    ('HIGH', 'High Priority'), 
+    ('EMERG', 'EMERGENCY PRIORITY!')
+)
+TASKSTATUS = (
+    ('IP', 'In Progress'), 
+    ('AS', 'Assigned'), 
+    ('UAS', 'Unassigned'), 
+    ('COM', 'Complete'), 
+)
+
 class UserForm(UserCreationForm):
     first_name = forms.CharField()
     last_name = forms.CharField()
@@ -23,12 +36,9 @@ class DeptForm(ModelForm):
         model = Department
         fields = ['name']
 
-class TaskForm(ModelForm):
-    class Meta:
-        model = Task
-        fields = '__all__'
-
-class EmployeeForm(ModelForm):
-    class Meta:
-        model = Employee
-        fields = ['dept']
+class TaskForm(forms.Form):
+        name = forms.CharField(initial = 'Task')
+        due = forms.DateField(widget = forms.SelectDateWidget)
+        description = forms.CharField(widget = forms.Textarea)
+        status = forms.MultipleChoiceField(choices = TASKSTATUS)
+        urgency = forms.MultipleChoiceField(choices = TASKURGENCY)

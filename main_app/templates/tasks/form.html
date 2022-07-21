@@ -2,34 +2,11 @@
 
 {% block content %}
 <div class="container">
-    <form method="POST" action="">
+
+    <form method="POST" action="{% url 'tasks_update' task.id %}">
         {% csrf_token %}
-        <div>
-            <input name="name" type="text" value="{{ task.name }}" class="form-control">
-        </div>
-        <div>
-            <input name="due" type="date" value="{{ task.due }}" class="form-control">
-    </div>
-    <div>
-        <input name="description" type="text" value="{{ task.description }}" class="form-control">
-    </div>
-    <div>
-        <select name="urgency" class="form-select" id="autoSizingSelect">
-            <option value="LOW">Low Priority</option>
-            <option value="MID">Mid Priority</option>
-            <option value="HIGH">High Priority</option>
-            <option value="EMERG">Emergency Priority</option>
-        </select>
-    </div>
-    <div>
-        <select name="status" class="form-select" id="autoSizingSelect">
-            <option value="IP">In Progress</option>
-            <option value="AS">Assigned</option>
-            <option value="UAS">Unassigned</option>
-            <option value="COM">Complete</option>
-        </select>
-    </div>
-    <input type="submit" value="Update Task" class="btn btn-secondary">
-</form>
+        {{ task_form.as_p }}
+    <input type="submit" value="Create Task" class="btn btn-primary">
+    </form>
 </div>
 {% endblock %}

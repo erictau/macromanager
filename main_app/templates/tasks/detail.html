@@ -14,7 +14,7 @@
                 {% for employee in task.employee_set.all %}
                     <a class="btn btn-sm btn-outline-dark" href="{% url 'employees_detail' employee.id %}">{{ employee.user.first_name }} {{ employee.user.last_name }}</a>
                 {% empty %}
-                    None Assigned
+                    No employees assigned to this task.
                 {% endfor %}
             </p>
         </div> 
@@ -36,10 +36,19 @@
 
     <div class="mt-4">
 
-        <h4>Assign Employees to Task</h4>
-        
-    </div>
-
+    <h4>Assign employee to this task</h4>
+    <form action="{% url 'assoc_task_employee' task.id %}" method="POST">
+        {% csrf_token %}
+        <div>
+          <select name="employee" class="form-select" id="autoSizingSelect">
+              <option selected>Add new employee</option>
+                  {% for emp in avlemp %}
+                  <option value="{{ emp.id }}">{{ emp.user.first_name }}</option>
+              {% endfor %}
+                  </select>
+            </div>
+            <input type="submit" value="Add Employee" class="btn btn-primary">
+          </form>
 </div>
 
 
