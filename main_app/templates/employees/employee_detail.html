@@ -25,7 +25,7 @@
         {% endfor %}
       </select>
     </div>
-    <input type="submit" value="Add Department" class="btn btn-primary">
+    <input type="submit" value="Add Department" class="btn btn-sm btn-primary">
   </form>
   {% else %}
   <p>{{ employee.user.first_name|capfirst }} is included in all departments.</p>
@@ -48,9 +48,9 @@
         {% for task in tasks %}
         <tr
           {% if task.status == 'COM'%}
-          style="background: gray"
+          class="table-secondary"
           {% elif task.urgency == 'EMERG' %}
-          style="background: red"
+          class="table-danger"
           {% endif %}
         >
           <td>{{ task.name }}</td>

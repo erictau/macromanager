@@ -29,8 +29,8 @@
                 <b>Description:</b> {{ task.description }}
             </p>
 
-            <a class="btn btn-secondary" href="{% url 'tasks_update' task.id %}">Update Task</a>
-            <a class="btn btn-danger" href="{% url 'tasks_delete' task.department_id task.id %}">Delete Task</a>
+            <a class="btn btn-sm btn-outline-dark" href="{% url 'tasks_update' task.id %}">Update Task</a>
+            <a class="btn btn-sm btn-danger" href="{% url 'tasks_delete' task.department_id task.id %}">Delete Task</a>
         </div>
     </div>
 
@@ -48,7 +48,7 @@
               {% endfor %}
                   </select>
             </div>
-            <input type="submit" value="Add Employee" class="btn btn-primary">
+            <input type="submit" value="Add Employee" class="btn btn-sm btn-primary">
           </form>
 
           <h4>Remove employee from this task</h4>
@@ -62,7 +62,7 @@
                   {% endfor %}
                       </select>
                 </div>
-                <input class="btn btn-danger" type="submit" value="Remove Employee" class="btn btn-primary">
+                <input class="btn btn-sm btn-danger" type="submit" value="Remove Employee" class="btn btn-primary">
               </form>
 </div>
 
