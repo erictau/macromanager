@@ -7,24 +7,26 @@
     <div class="card w-50 m-auto">
         <div class="card-header">
             <h5 class="card-title">Task: {{ task.name }}</h5>
-            <p class="card-text"><b>Department:</b> <a class="btn btn-sm btn-outline-dark" href="{% url 'departments_detail' task.department.id %}">{{ task.department.name }}</a>
+            <p class="card-text"><b>Department:</b> <a class="btn btn-sm btn-outline-dark"
+                    href="{% url 'departments_detail' task.department.id %}">{{ task.department.name }}</a>
             </p>
             <p class="card-text">
                 <b>Employees:</b>
                 {% for employee in task.employee_set.all %}
-                    <a class="btn btn-sm btn-outline-dark" href="{% url 'employees_detail' employee.id %}">{{ employee.user.first_name }} {{ employee.user.last_name }}</a>
+                <a class="btn btn-sm btn-outline-dark" href="{% url 'employees_detail' employee.id %}">
+                    {{employee.user.first_name }} {{ employee.user.last_name }}</a>
                 {% empty %}
-                    No employees assigned to this task.
+                No employees assigned to this task.
                 {% endfor %}
             </p>
-        </div> 
+        </div>
         <div class="card-body">
             <p>
-                <b>Due Date:</b> {{ task.due }} 
+                <b>Due Date:</b> {{ task.due }}
                 <br>
                 <b>Status:</b> {{ task.get_status_display }}
                 <br>
-                <b>Urgency:</b> {{ task.get_urgency_display }} 
+                <b>Urgency:</b> {{ task.get_urgency_display }}
                 <br>
                 <b>Description:</b> {{ task.description }}
             </p>
@@ -34,38 +36,36 @@
         </div>
     </div>
 
-    <div class="mt-4">
-
-
-    <h4>Assign employee to this task</h4>
-    <form action="{% url 'assoc_task_employee' task.id %}" method="POST">
-        {% csrf_token %}
-        <div>
-          <select name="employee" class="form-select" id="autoSizingSelect">
-              <option selected>Add Employee</option>
-                  {% for emp in avlemp %}
-                  <option value="{{ emp.id }}">{{ emp.user.first_name }}</option>
-              {% endfor %}
-                  </select>
+    <div class="mt-4 m-auto w-50">
+        <h4>Assign employee to this task</h4>
+        <form action="{% url 'assoc_task_employee' task.id %}" method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <select name="employee" class="form-select" id="autoSizingSelect">
+                    <option selected>Add Employee</option>
+                    {% for emp in avlemp %}
+                    <option value="{{ emp.id }}">{{ emp.user.first_name }}</option>
+                    {% endfor %}
+                </select>
             </div>
             <input type="submit" value="Add Employee" class="btn btn-sm btn-primary">
-          </form>
+        </form>
 
-          <h4>Remove employee from this task</h4>
-          <form action="{% url 'remove_task_employee' task.id %}" method="POST">
+        <h4 class="mt-3">Remove employee from this task</h4>
+        <form action="{% url 'remove_task_employee' task.id %}" method="POST">
             {% csrf_token %}
-            <div>
-              <select name="employee" class="form-select" id="autoSizingSelect">
-                  <option selected>Remove Employee</option>
-                      {% for emp in asgnemp %}
-                      <option value="{{ emp.id }}">{{ emp.user.first_name }}</option>
-                  {% endfor %}
-                      </select>
-                </div>
-                <input class="btn btn-sm btn-danger" type="submit" value="Remove Employee" class="btn btn-primary">
-              </form>
-</div>
+            <div class="mb-3">
+                <select name="employee" class="form-select" id="autoSizingSelect">
+                    <option selected>Remove Employee</option>
+                    {% for emp in asgnemp %}
+                    <option value="{{ emp.id }}">{{ emp.user.first_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <input class="btn btn-sm btn-danger" type="submit" value="Remove Employee" class="btn btn-primary">
+        </form>
+    </div>
 
 
 
-{% endblock %}
+    {% endblock %}
