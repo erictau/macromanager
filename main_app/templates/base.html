@@ -30,7 +30,11 @@
                   </li>
                   {% if user.is_authenticated %}
                   <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'departments_index' %}">Departments Index</a>
+                    <a class="nav-link active" aria-current="page" href="{% url 'departments_index' %}">All Departments</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'employees_index' %}">All Employees</a>
+                  </li>
                     {% if request.user.employee %}
                   <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{% url 'employees_detail' request.user.employee.id %}">My Tasks</a>
