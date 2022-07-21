@@ -10,29 +10,10 @@
     {% endif %}
   </h2>
 
-  <h2>Departments</h2>
-  {% for dept in departments.all %}
-  <a class="btn btn-sm btn-outline-dark" href="{% url 'departments_detail' dept.id %}">{{ dept.name }}</a>
-  {% endfor %}
-
-  {% if avldepts.count %}
-  <form action="{% url 'assoc_dept_employee' employee.id %}" method="post">
-    {% csrf_token %}
-    <div class="pb-2 pt-2">
-      <select name="dept" class="form-select" id="autoSizingSelect">
-        {% for dept in avldepts %}
-        <option value="{{ dept.id }}">{{ dept.name }}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <input type="submit" value="Add Department" class="btn btn-sm btn-primary">
-  </form>
-  {% else %}
-  <p>{{ employee.user.first_name|capfirst }} is included in all departments.</p>
-  {% endif %}
+  
 
   <div class="mt-4">
-    <h2>Tasks</h2>
+    <h3>your Tasks</h3>
     <div class="card p-3">
     <table class="table table-striped">
       <thead>
@@ -66,6 +47,34 @@
       </table>
     </div>
   </div>
+<br>
+<br>
+  <h3>Your Departments</h3>
+  {% for dept in departments.all %}
+  <a class="btn btn-md btn-outline-dark" href="{% url 'departments_detail' dept.id %}">{{ dept.name }}</a>
+  {% endfor %}
+<br>
+<br>
+<br>
+<h4>Add yourself to a department</h2>
+  {% if avldepts.count %}
+  <form action="{% url 'assoc_dept_employee' employee.id %}" method="post">
+    {% csrf_token %}
+    <div class="pb-2 pt-2">
+      <select name="dept" class="form-select" id="autoSizingSelect">
+        {% for dept in avldepts %}
+        <option value="{{ dept.id }}">{{ dept.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <input type="submit" value="Add Department" class="btn btn-sm btn-primary">
+  </form>
+  {% else %}
+  <p>{{ employee.user.first_name|capfirst }} is assigned to all departments in {{ user.employee.org }}.</p>
+  {% endif %}
+
+
+
 
 </div>
 {% endblock %}
