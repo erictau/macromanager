@@ -61,9 +61,9 @@ You're all done
 Python HTML CSS JAVASCRIPT PSQL DJANGO BOOTSTRAP HEROKU GITHUB
 
 ## Planning
-![Trello](https://imgur.com/h1u1Cjr)
-![ERD](https://imgur.com/hX8mbLb)
-![Wireframe](https://imgur.com/RXAeF3O)
+![Trello](https://imgur.com/h1u1Cjr.png)
+![ERD](https://imgur.com/hX8mbLb.png)
+![Wireframe](https://imgur.com/RXAeF3O.png)
 
 ## Next Steps
 Google API integration, Display
