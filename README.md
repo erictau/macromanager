@@ -57,6 +57,15 @@ Once you ADD an Employee to a Task you will see their name next to the Employees
 You're all done
 
 
+## Technologies used
+Python HTML CSS JAVASCRIPT PSQL DJANGO BOOTSTRAP HEROKU GITHUB
 
+## Planning
+![Trello](https://imgur.com/h1u1Cjr)
+![ERD](https://imgur.com/hX8mbLb)
+![Wireframe](https://imgur.com/RXAeF3O)
+
+## Next Steps
+Google API integration, Display
 
 
