@@ -50,7 +50,7 @@ You can ASSIGN an Employee here
 
 Once you ADD an Employee to a Task you will see their name next to the Employees list on the Task
 
-![This is an image](https://imgur.com/lYXOL8S.png)
+![This is an image](https://imgur.com/rpDOc8N.png)
 
 ### Step 7
 
