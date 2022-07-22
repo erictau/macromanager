@@ -46,7 +46,6 @@
             {% csrf_token %}
             <div class="mb-3">
                 <select name="employee" class="form-select" id="autoSizingSelect">
-                    <option selected>Add Employee</option>
                     {% for emp in avlemp %}
                     <option value="{{ emp.id }}">{{ emp.user.first_name }}</option>
                     {% endfor %}
@@ -60,7 +59,6 @@
             {% csrf_token %}
             <div class="mb-3">
                 <select name="employee" class="form-select" id="autoSizingSelect">
-                    <option selected>Remove Employee</option>
                     {% for emp in asgnemp %}
                     <option value="{{ emp.id }}">{{ emp.user.first_name }}</option>
                     {% endfor %}
